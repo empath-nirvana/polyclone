@@ -43,7 +43,9 @@ jobs:
       - name: Build comparator (with lean4export)
         run: |
           git clone --depth 1 https://github.com/leanprover/comparator ../comparator-tool
+          cp lean-toolchain ../comparator-tool/lean-toolchain
           cd ../comparator-tool
+          lake update lean4export 2>/dev/null || true
           lake build lean4export comparator
           echo "COMPARATOR_BIN=$(find . -type f -name comparator -path '*/bin/*' | head -1 | xargs realpath)" >> "$GITHUB_ENV"
           L4E=$(find . .lake -type f -name lean4export -path '*/bin/*' 2>/dev/null | head -1)
