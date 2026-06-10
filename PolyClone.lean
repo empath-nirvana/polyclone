@@ -27,3 +27,5 @@ import PolyClone.Perfect.Descent
 import PolyClone.Perfect.Bridge
 import PolyClone.Perfect.Main
 import PolyClone.Perfect.Dichotomy
+import PolyClone.Naturals
+import PolyClone.ZeroSumFreeSemiring
