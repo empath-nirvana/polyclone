@@ -30,25 +30,25 @@ status:
     file: "PolyClone/Perfect/Dichotomy.lean"
     sorry_count: 0
     axioms: ["propext", "Classical.choice", "Quot.sound"]
-    comparator_config: ""
+    comparator_config: "comparator/config.json"
     literature_dependencies: []
   - declaration: "PolyClone.FrobeniusDescent.F2_master_conjecture"
     file: "PolyClone/FrobeniusDescent/Main.lean"
     sorry_count: 0
     axioms: ["propext", "Classical.choice", "Quot.sound"]
-    comparator_config: ""
+    comparator_config: "comparator/config.json"
     literature_dependencies: []
   - declaration: "PolyClone.FrobeniusDescent.int_master"
     file: "PolyClone/FrobeniusDescent/IntReduction.lean"
     sorry_count: 0
     axioms: ["propext", "Classical.choice", "Quot.sound"]
-    comparator_config: ""
+    comparator_config: "comparator/config.json"
     literature_dependencies: []
   - declaration: "PolyClone.FrobeniusDescent.qOp_complete"
     file: "PolyClone/FrobeniusDescent/CharTwoDichotomy.lean"
     sorry_count: 0
     axioms: ["propext", "Classical.choice", "Quot.sound"]
-    comparator_config: ""
+    comparator_config: "comparator/config.json"
     literature_dependencies: []
   - declaration: "PolyClone.Perfect.char2_field_master"
     file: "PolyClone/Perfect/Dichotomy.lean"

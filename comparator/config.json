@@ -1,0 +1,20 @@
+{
+    "challenge_module": "Challenge",
+    "solution_module": "PolyClone",
+    "theorem_names": [
+        "PolyClone.FrobeniusDescent.F2_master_conjecture",
+        "PolyClone.FrobeniusDescent.int_master",
+        "PolyClone.FrobeniusDescent.qOp_complete",
+        "PolyClone.Perfect.complete_iff_two_isUnit"
+    ],
+    "definition_names": [
+        "PolyClone.CloAddMul.Clo",
+        "PolyClone.CloAddMul.addOp",
+        "PolyClone.CloAddMul.mulOp",
+        "PolyClone.FrobeniusDescent.R2",
+        "PolyClone.FrobeniusDescent.F",
+        "PolyClone.FrobeniusDescent.qOp"
+    ],
+    "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "enable_nanoda": true
+}
