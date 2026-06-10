@@ -1,0 +1,55 @@
+name: Comparator judge
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['comparator/**', 'PolyClone/**', 'PolyClone.lean', 'lakefile.toml', 'lean-toolchain', '.github/workflows/comparator.yml']
+
+jobs:
+  judge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Build solution and challenge
+        run: |
+          lake exe cache get
+          lake build PolyClone Challenge
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Build landrun
+        run: |
+          git clone --depth 1 https://github.com/Zouuup/landrun
+          cd landrun
+          go build -o landrun ./cmd/landrun 2>/dev/null || go build -o landrun .
+          echo "$PWD" >> "$GITHUB_PATH"
+
+      - name: Build nanoda
+        run: |
+          git clone --depth 1 https://github.com/ammkrn/nanoda_lib
+          cd nanoda_lib
+          cargo build --release
+          echo "$PWD/target/release" >> "$GITHUB_PATH"
+
+      - name: Build comparator (with lean4export)
+        run: |
+          git clone --depth 1 https://github.com/leanprover/comparator ../comparator-tool
+          cd ../comparator-tool
+          lake build lean4export comparator
+          echo "COMPARATOR_BIN=$(find . -type f -name comparator -path '*/bin/*' | head -1 | xargs realpath)" >> "$GITHUB_ENV"
+          L4E=$(find . .lake -type f -name lean4export -path '*/bin/*' 2>/dev/null | head -1)
+          if [ -n "$L4E" ]; then echo "COMPARATOR_LEAN4EXPORT=$(realpath "$L4E")" >> "$GITHUB_ENV"; fi
+
+      - name: Run judge
+        run: |
+          which landrun nanoda || true
+          lake env "$COMPARATOR_BIN" comparator/config.json

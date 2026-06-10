@@ -7,3 +7,7 @@ scope = "leanprover-community"
 
 [[lean_lib]]
 name = "PolyClone"
+
+[[lean_lib]]
+name = "Challenge"
+srcDir = "comparator"

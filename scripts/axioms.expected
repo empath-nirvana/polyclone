@@ -1,0 +1,7 @@
+'PolyClone.FrobeniusDescent.F2_master_conjecture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PolyClone.FrobeniusDescent.int_master' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PolyClone.FrobeniusDescent.qOp_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PolyClone.Perfect.perfect_char2_master' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PolyClone.Perfect.char2_field_master' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PolyClone.Perfect.complete_iff_two_isUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PolyClone.Naturals.polynomial_does_not_reach_both' depends on axioms: [propext, Classical.choice, Quot.sound]
