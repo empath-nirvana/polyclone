@@ -66,22 +66,26 @@ status:
 automation:
   methods:
     - method: "agent"
-      models: ["claude-fable-5"]
+      models: ["claude-opus-4-x", "claude-fable-5"]   # Opus 4-series for the May–early-June sessions; exact minor versions TBD
       framework: "Claude Code"
       tool_setup: >
-        Interactive directing session: statement layer, file skeletons with
-        proof-spec headers, and the main descent induction written in-session;
-        all polynomial identities verified symbolically (sympy, exact
-        arithmetic) before formalization.
+        Interactive directing sessions across a ~3-week research campaign:
+        statement layers, file skeletons with proof-spec headers, and the
+        main descent induction written in-session; all polynomial identities
+        verified symbolically (sympy, exact arithmetic) before formalization.
+        Earlier campaign sessions (Claude Opus) built the clone
+        infrastructure (CloAddMul, DXDYCocycle, Tameness) and the semiring
+        companion (Naturals, ZeroSumFreeSemiring); the descent chain and
+        dichotomy were formalized June 9-10 (Fable 5).
       cost:
-        wall_time: "2 days (June 9-10, 2026) for the core; +1 day extensions"
+        wall_time: "~3 weeks (circa May 21 - June 10, 2026); the final descent chain in the last 2 days"
         spend_usd: "subscription; not separately metered"
         hardware: "API-only; local Mac mini for lake builds"
       prompting_notes: >
         Falsification-first policy: no Lean work on a claim before symbolic
         verification of its certificate.
     - method: "agent"
-      models: ["claude-fable-5"]
+      models: ["claude-opus-4-x", "claude-fable-5"]
       framework: "Claude Code (parallel background subagents)"
       tool_setup: >
         Per-file fill agents with frozen signatures (downstream files compiled
