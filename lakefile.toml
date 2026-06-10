@@ -1,0 +1,9 @@
+name = "PolyClone"
+defaultTargets = ["PolyClone"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+
+[[lean_lib]]
+name = "PolyClone"
