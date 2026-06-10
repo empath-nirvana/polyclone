@@ -43,15 +43,42 @@ jobs:
       - name: Build comparator (with lean4export)
         run: |
           git clone --depth 1 https://github.com/leanprover/comparator ../comparator-tool
+          # Build the judge with THIS PROJECT's toolchain so the lean4export
+          # binary it spawns can read our .olean files.
+          #
+          # NOTE: do NOT run `lake update` here. Lake's "toolchain uplift"
+          # silently rewrites ../comparator-tool/lean-toolchain to the
+          # dependency's newer toolchain (lean4export master is on
+          # v4.31.0-rc2) and restarts via elan, so comparator + lean4export
+          # get built with v4.31.0-rc2 and then reject our v4.30.0-rc2
+          # oleans with "incompatible header". The pinned revs in
+          # comparator's lake-manifest.json build fine as-is.
           cp lean-toolchain ../comparator-tool/lean-toolchain
           cd ../comparator-tool
-          lake update lean4export 2>/dev/null || true
           lake build lean4export comparator
+          # Fail fast if anything bumped the judge's toolchain behind our back.
+          cmp lean-toolchain "$GITHUB_WORKSPACE/lean-toolchain"
           echo "COMPARATOR_BIN=$(find . -type f -name comparator -path '*/bin/*' | head -1 | xargs realpath)" >> "$GITHUB_ENV"
           L4E=$(find . .lake -type f -name lean4export -path '*/bin/*' 2>/dev/null | head -1)
           if [ -n "$L4E" ]; then echo "COMPARATOR_LEAN4EXPORT=$(realpath "$L4E")" >> "$GITHUB_ENV"; fi
 
+      - name: Prepare judge config
+        run: |
+          # comparator's "definition holes" only support `def`s: it errors with
+          # "Challenge constant is not a definition" on anything else
+          # (Comparator/Compare.lean, `let .defnInfo ... | throw`).
+          # PolyClone.CloAddMul.Clo is an `inductive`, so it cannot be a hole.
+          # Dropping it from definition_names does NOT weaken the judgment:
+          # Clo is reachable from every theorem statement, so the comparator's
+          # dependency crawl compares it FULLY (structurally) between challenge
+          # and solution instead of signature-only. comparator/config.json
+          # itself is left untouched.
+          jq '.definition_names |= map(select(. != "PolyClone.CloAddMul.Clo"))' \
+            comparator/config.json > "$RUNNER_TEMP/judge-config.json"
+          cat "$RUNNER_TEMP/judge-config.json"
+
       - name: Run judge
         run: |
-          which landrun nanoda || true
-          lake env "$COMPARATOR_BIN" comparator/config.json
+          which landrun nanoda_bin || true
+          echo "lean4export: $COMPARATOR_LEAN4EXPORT"
+          lake env "$COMPARATOR_BIN" "$RUNNER_TEMP/judge-config.json"
