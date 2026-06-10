@@ -1,0 +1,192 @@
+version: "v0.3"
+
+project:
+  name: "PolyClone"
+  authors: ["John Thompson", "Claude (Fable 5, Anthropic) — agent-written proofs"]
+  license: "TBD"               # no LICENSE file yet; Apache-2.0 suggested
+
+sources:
+  - title: "One-operation completeness for polynomial rings: a characteristic-two dichotomy (draft)"
+    authors: ["John Thompson"]
+    id: "unpublished manuscript, June 2026 (available from the author; arXiv submission planned)"
+    type: "manuscript, co-developed with the formalization"
+    license: ""
+    author_contacted: "n/a"    # source author directed the formalization
+    prior_work: ""             # no earlier formalization of these results
+
+status:
+  scope: >
+    Complete formalization of all results of the source manuscript, plus
+    extensions found during formalization: the master theorem over every
+    perfect field of characteristic 2 (Frobenius-twist descent), over every
+    field of characteristic 2 (perfection embedding), the full dichotomy
+    (a complete binary polynomial exists over a commutative ring R iff 2 is
+    a unit of R), and the semiring companion over N.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+  - declaration: "PolyClone.Perfect.complete_iff_two_isUnit"
+    file: "PolyClone/Perfect/Dichotomy.lean"
+    sorry_count: 0
+    axioms: ["propext", "Classical.choice", "Quot.sound"]
+    comparator_config: ""
+    literature_dependencies: []
+  - declaration: "PolyClone.FrobeniusDescent.F2_master_conjecture"
+    file: "PolyClone/FrobeniusDescent/Main.lean"
+    sorry_count: 0
+    axioms: ["propext", "Classical.choice", "Quot.sound"]
+    comparator_config: ""
+    literature_dependencies: []
+  - declaration: "PolyClone.FrobeniusDescent.int_master"
+    file: "PolyClone/FrobeniusDescent/IntReduction.lean"
+    sorry_count: 0
+    axioms: ["propext", "Classical.choice", "Quot.sound"]
+    comparator_config: ""
+    literature_dependencies: []
+  - declaration: "PolyClone.FrobeniusDescent.qOp_complete"
+    file: "PolyClone/FrobeniusDescent/CharTwoDichotomy.lean"
+    sorry_count: 0
+    axioms: ["propext", "Classical.choice", "Quot.sound"]
+    comparator_config: ""
+    literature_dependencies: []
+  - declaration: "PolyClone.Perfect.char2_field_master"
+    file: "PolyClone/Perfect/Dichotomy.lean"
+    sorry_count: 0
+    axioms: ["propext", "Classical.choice", "Quot.sound"]
+    comparator_config: ""
+    literature_dependencies: []
+  - declaration: "PolyClone.Naturals.polynomial_does_not_reach_both"
+    file: "PolyClone/Naturals.lean"
+    sorry_count: 0
+    axioms: ["propext", "Classical.choice", "Quot.sound"]
+    comparator_config: ""
+    literature_dependencies: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-fable-5"]
+      framework: "Claude Code"
+      tool_setup: >
+        Interactive directing session: statement layer, file skeletons with
+        proof-spec headers, and the main descent induction written in-session;
+        all polynomial identities verified symbolically (sympy, exact
+        arithmetic) before formalization.
+      cost:
+        wall_time: "2 days (June 9-10, 2026) for the core; +1 day extensions"
+        spend_usd: "subscription; not separately metered"
+        hardware: "API-only; local Mac mini for lake builds"
+      prompting_notes: >
+        Falsification-first policy: no Lean work on a claim before symbolic
+        verification of its certificate.
+    - method: "agent"
+      models: ["claude-fable-5"]
+      framework: "Claude Code (parallel background subagents)"
+      tool_setup: >
+        Per-file fill agents with frozen signatures (downstream files compiled
+        against sorried statements first, validating interfaces before
+        proofs); one file per agent, disjoint ownership; verification via
+        per-file `lake env lean`; integration builds and axiom audits by the
+        directing session.
+      cost:
+        wall_time: "included above"
+        spend_usd: "subscription; not separately metered"
+        hardware: "API-only"
+      prompting_notes: >
+        Fill prompts contained complete mathematical proof plans; agents
+        instructed to STOP and report if a statement appeared wrong rather
+        than weaken it. Two statements were improved by agents (keystone:
+        char-2 Jacobian proof replacing a perfectness argument; kill lemma:
+        resultant certificate) and the source manuscript was updated to match.
+  spend_usd: "subscription; not separately metered"
+  notes: >
+    The mathematics and the formalization were co-developed: the descent
+    proof was machine-checked within hours of its discovery, and two paper
+    proofs are simplifications found during formalization.
+
+fidelity:
+  divergences: >
+    Paper property "(dagger)" is the Lean predicate `Tame` (naming only).
+    The paper presents the F2 case in the body and the perfect-field /
+    dichotomy generalizations as remarks; the formalization proves the
+    general versions in PolyClone/Perfect/ with the F2 case as an instance.
+    The kill lemma is sketched via a Bezout certificate in the paper and
+    realized via resultants in Lean (noted in the paper).
+
+review:
+  status: "self-assessed"
+  reviewers: ["John Thompson (mathematics audit)"]
+  notes: >
+    Statement layer (~15 lines) audited by hand and guarded by behavioral
+    tests (PolyClone/FrobeniusDescent/StatementAudit.lean derives
+    independently-known facts from the main theorems). Axiom audits via
+    #print axioms on all main results. No external peer review yet.
+
+alignment:
+  namespace: "PolyClone"
+  statements:
+    - source: "Theorem 1.1 (no complete operation over Z)"
+      lean: "PolyClone.FrobeniusDescent.int_master"
+      module: "PolyClone/FrobeniusDescent/IntReduction.lean"
+      status: "proved"
+      note: ""
+    - source: "Theorem 1.2 (F2 disjunction, no hypotheses)"
+      lean: "PolyClone.FrobeniusDescent.F2_master_conjecture"
+      module: "PolyClone/FrobeniusDescent/Main.lean"
+      status: "proved"
+      note: ""
+    - source: "Theorem 1.3 (dichotomy: complete iff 2 a unit)"
+      lean: "PolyClone.Perfect.complete_iff_two_isUnit"
+      module: "PolyClone/Perfect/Dichotomy.lean"
+      status: "proved"
+      note: ""
+    - source: "Proposition 3.x (D-cocycle, Dq=0 excludes xy)"
+      lean: "PolyClone.DXDYCocycle.XY_not_in_Clo"
+      module: "PolyClone/DXDYCocycle.lean"
+      status: "proved"
+      note: ""
+    - source: "Proposition 5.x (master reduction via property (dagger))"
+      lean: "PolyClone.Tameness.master"
+      module: "PolyClone/Tameness.lean"
+      status: "proved"
+      note: "paper's (dagger) = Lean `Tame`"
+    - source: "Theorem 6.x (the Frobenius descent)"
+      lean: "PolyClone.FrobeniusDescent.no_nonconstant_witness"
+      module: "PolyClone/FrobeniusDescent/Descent.lean"
+      status: "proved"
+      note: "generalized version in PolyClone/Perfect/Descent.lean"
+    - source: "Lemma (kill lemma)"
+      lean: "PolyClone.FrobeniusDescent.c_algebraic_of_curve_constraint"
+      module: "PolyClone/FrobeniusDescent/KillLemma.lean"
+      status: "proved"
+      note: "via resultants (paper sketches Bezout)"
+    - source: "Lemma (algebraic points)"
+      lean: "PolyClone.FrobeniusDescent.algebraic_point"
+      module: "PolyClone/FrobeniusDescent/AlgebraicPoint.lean"
+      status: "proved"
+      note: ""
+    - source: "Lemma (keystone, no curve of critical points)"
+      lean: "PolyClone.FrobeniusDescent.hX_hY_relPrime"
+      module: "PolyClone/FrobeniusDescent/Perfectness.lean"
+      status: "proved"
+      note: "char-2 Jacobian proof found during formalization; paper updated"
+    - source: "Theorem 7.x (x^2 - y complete when 2 invertible)"
+      lean: "PolyClone.FrobeniusDescent.qOp_complete"
+      module: "PolyClone/FrobeniusDescent/CharTwoDichotomy.lean"
+      status: "proved"
+      note: ""
+    - source: "Remark 6.x (perfect char-2 fields; every char-2 field)"
+      lean: "PolyClone.Perfect.perfect_char2_master, PolyClone.Perfect.char2_field_master"
+      module: "PolyClone/Perfect/Main.lean, PolyClone/Perfect/Dichotomy.lean"
+      status: "proved"
+      note: ""
+    - source: "Semiring companion (N master theorem, functions)"
+      lean: "PolyClone.Naturals.polynomial_does_not_reach_both"
+      module: "PolyClone/Naturals.lean"
+      status: "proved"
+      note: "function-level; implies formal over N (infinite domain)"
+
+acknowledgements: >
+  Proofs machine-generated by Claude (Fable 5) via Claude Code and checked
+  by the Lean 4 kernel; mathematics co-developed and audited by the author.
