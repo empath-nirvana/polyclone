@@ -1,29 +1,35 @@
 # PolyClone
 
-Formal verification companion to the paper *One-operation completeness
-for polynomial rings: a characteristic-two dichotomy*.
+For a commutative ring `R` and `p ∈ R[x,y]`, let `Clo p` be the smallest
+set of bivariate polynomials containing the variables and all constants
+and closed under `(f, g) ↦ p(f, g)`; call `p` *complete* if
+`Clo p = R[x,y]` — a single operation generating every polynomial by
+composition, as NAND generates every Boolean function.
 
-For a commutative ring `R` and `p ∈ R[x,y]`, `Clo p` is the smallest
-set of bivariate polynomials containing the variables and all
-constants and closed under `(f, g) ↦ p(f, g)`; `p` is *complete* if
-`Clo p` is everything.
+**Central theorem.** A complete binary polynomial exists over `R` if
+and only if `2` is a unit of `R`. When `2` is invertible, `x² − y` is
+complete; over any field of characteristic `2` (and hence over `ℤ` and
+over any ring with a characteristic-`2` residue field), every `p`
+misses `x+y` or `x·y`. The negative half is proved by an infinite
+descent on a would-be counterexample's "Frobenius depth" — how many
+times it factors through the squaring map.
 
-## Main results (paper ↔ Lean)
+## Results
 
-| Paper | Statement | Lean |
-|---|---|---|
-| Thm 1.1 | no complete `p` over `ℤ` (degree-free) | `int_master`, `masterConjecture_int` (`FrobeniusDescent/IntReduction.lean`) |
-| Thm 1.2 | `∀ q ∈ F₂[x,y]`: `x+y ∉ Clo q` or `xy ∉ Clo q` | `F2_master_conjecture` (`FrobeniusDescent/Main.lean`) |
-| Thm 7.1 | `x² − y` complete when `2` is invertible (so over `ℚ`, `F₃`, …) | `qOp_complete` (`FrobeniusDescent/CharTwoDichotomy.lean`) |
-| Prop 3.2 | `Dq = 0 ⟹ xy ∉ Clo q` (cocycle) | `XY_not_in_Clo` (`DXDYCocycle.lean`) |
-| Prop 5.1 | master reduction via property (†) | `master` (`Tameness.lean`) |
-| Thm 6.x | the Frobenius descent | `no_nonconstant_witness` (`FrobeniusDescent/Descent.lean`) |
-| Lem (kill) | curve constraint ⟹ level algebraic | `c_algebraic_of_curve_constraint` (`FrobeniusDescent/KillLemma.lean`) |
-| Lem (alg. pts) | common zero of coprime pair is algebraic | `algebraic_point` (`FrobeniusDescent/AlgebraicPoint.lean`) |
-| Lem (keystone) | `h_x, h_y` coprime after the peel | `hX_hY_relPrime` (`FrobeniusDescent/Perfectness.lean`) |
-| Thm 1.3 | **the dichotomy**: complete op over `R` ⟺ `2 ∈ R×` | `complete_iff_two_isUnit` (`Perfect/Dichotomy.lean`) |
-| Rem 6.x | descent over every perfect char-2 field (Frobenius twist) | `perfect_char2_master` (`Perfect/Main.lean`) |
-| — | every char-2 field obstructed (perfection embedding) | `char2_field_master` (`Perfect/Dichotomy.lean`) |
+| Statement | Lean |
+|---|---|
+| **the dichotomy**: complete op over `R` ⟺ `2 ∈ R×` | `complete_iff_two_isUnit` (`Perfect/Dichotomy.lean`) |
+| no complete `p` over `ℤ` (degree-free disjunction) | `int_master`, `masterConjecture_int` (`FrobeniusDescent/IntReduction.lean`) |
+| `∀ q ∈ F₂[x,y]`: `x+y ∉ Clo q` or `xy ∉ Clo q` | `F2_master_conjecture` (`FrobeniusDescent/Main.lean`) |
+| same over every perfect char-2 field (Frobenius twist) | `perfect_char2_master` (`Perfect/Main.lean`) |
+| same over every char-2 field (perfection embedding) | `char2_field_master` (`Perfect/Dichotomy.lean`) |
+| `x² − y` complete when `2` is invertible (`ℚ`, `F₃`, …) | `qOp_complete` (`FrobeniusDescent/CharTwoDichotomy.lean`) |
+| `Dq = 0 ⟹ xy ∉ Clo q` (derivative cocycle) | `XY_not_in_Clo` (`DXDYCocycle.lean`) |
+| diagonal-rigidity reduction | `master` (`Tameness.lean`) |
+| the Frobenius descent | `no_nonconstant_witness` (`FrobeniusDescent/Descent.lean`) |
+| curve constraint ⟹ level algebraic (kill lemma) | `c_algebraic_of_curve_constraint` (`FrobeniusDescent/KillLemma.lean`) |
+| common zero of coprime pair is algebraic | `algebraic_point` (`FrobeniusDescent/AlgebraicPoint.lean`) |
+| `h_x, h_y` coprime after the peel (keystone) | `hX_hY_relPrime` (`FrobeniusDescent/Perfectness.lean`) |
 
 **Semiring companion** (`Naturals.lean`, `ZeroSumFreeSemiring.lean`):
 over the semiring `ℕ` — where subtraction is unavailable and the ring
