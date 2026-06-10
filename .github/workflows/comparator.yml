@@ -42,7 +42,8 @@ jobs:
 
       - name: Build comparator (with lean4export)
         run: |
-          git clone --depth 1 https://github.com/leanprover/comparator ../comparator-tool
+          git clone https://github.com/leanprover/comparator ../comparator-tool
+          git -C ../comparator-tool checkout 5fb6e55
           # Build the judge with THIS PROJECT's toolchain so the lean4export
           # binary it spawns can read our .olean files.
           #
@@ -62,23 +63,8 @@ jobs:
           L4E=$(find . .lake -type f -name lean4export -path '*/bin/*' 2>/dev/null | head -1)
           if [ -n "$L4E" ]; then echo "COMPARATOR_LEAN4EXPORT=$(realpath "$L4E")" >> "$GITHUB_ENV"; fi
 
-      - name: Prepare judge config
-        run: |
-          # comparator's "definition holes" only support `def`s: it errors with
-          # "Challenge constant is not a definition" on anything else
-          # (Comparator/Compare.lean, `let .defnInfo ... | throw`).
-          # PolyClone.CloAddMul.Clo is an `inductive`, so it cannot be a hole.
-          # Dropping it from definition_names does NOT weaken the judgment:
-          # Clo is reachable from every theorem statement, so the comparator's
-          # dependency crawl compares it FULLY (structurally) between challenge
-          # and solution instead of signature-only. comparator/config.json
-          # itself is left untouched.
-          jq '.definition_names |= map(select(. != "PolyClone.CloAddMul.Clo"))' \
-            comparator/config.json > "$RUNNER_TEMP/judge-config.json"
-          cat "$RUNNER_TEMP/judge-config.json"
-
       - name: Run judge
         run: |
           which landrun nanoda_bin || true
           echo "lean4export: $COMPARATOR_LEAN4EXPORT"
-          lake env "$COMPARATOR_BIN" "$RUNNER_TEMP/judge-config.json"
+          lake env "$COMPARATOR_BIN" comparator/config.json
