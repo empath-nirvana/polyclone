@@ -21,6 +21,9 @@ constants and closed under `(f, g) ↦ p(f, g)`; `p` is *complete* if
 | Lem (kill) | curve constraint ⟹ level algebraic | `c_algebraic_of_curve_constraint` (`FrobeniusDescent/KillLemma.lean`) |
 | Lem (alg. pts) | common zero of coprime pair is algebraic | `algebraic_point` (`FrobeniusDescent/AlgebraicPoint.lean`) |
 | Lem (keystone) | `h_x, h_y` coprime after the peel | `hX_hY_relPrime` (`FrobeniusDescent/Perfectness.lean`) |
+| Thm 1.3 | **the dichotomy**: complete op over `R` ⟺ `2 ∈ R×` | `complete_iff_two_isUnit` (`Perfect/Dichotomy.lean`) |
+| Rem 6.x | descent over every perfect char-2 field (Frobenius twist) | `perfect_char2_master` (`Perfect/Main.lean`) |
+| — | every char-2 field obstructed (perfection embedding) | `char2_field_master` (`Perfect/Dichotomy.lean`) |
 
 `FrobeniusDescent/StatementAudit.lean` derives independently known
 facts from the main theorems (e.g. `x+y ∉ Clo(xy)`, and the historical
