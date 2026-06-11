@@ -50,7 +50,7 @@ results have been checked formally.
 
 \section{Introduction}
 
-\subsection{A Sheffer stroke for $\Z[x,y]$?}
+\subsection{A Sheffer stroke for polynomial rings}
 
 Every Boolean function can be built from a single connective: NAND
 (the \emph{Sheffer stroke}) \cite{Sheffer,Post}.  One-element generating sets of this kind
@@ -67,7 +67,7 @@ and we are given \emph{one} binary polynomial $p(x,y)$ as our only
 ``connective'': whenever $f$ and $g$ have been built, we may build
 $p(f,g)$.  Write $\Clo(p)$ for the set of all polynomials obtainable
 this way (a precise definition is in Section~\ref{sec:prelim};
-Section~\ref{sec:context} explains how this relates to --- and differs
+Section~\ref{sec:precision} explains how this relates to --- and differs
 from --- the standard notion of a \emph{clone} in universal algebra,
 and no background from that subject is needed).  Call
 $p$ \emph{complete} if $\Clo(p) = \Z[x,y]$ --- if the single
@@ -90,15 +90,44 @@ For every $p \in \Z[x,y]$, at least one of $x+y$, $xy$ lies outside
 $\Clo(p)$.  In particular, no binary polynomial over $\Z$ is complete.
 \end{theorem}
 
-\subsection{Why characteristic two}
+\subsection{Results}\label{sec:results}
 
-Where should such a theorem come from?  The first observation is that
-completeness survives reduction of coefficients: a ring homomorphism
-$R \to S$ carries any derivation of $x+y$ over $R$ --- by a
-\emph{derivation} we mean a formula building $x+y$ from the variables
-and constants by repeated application of $p$ --- to one over $S$.
-Reducing mod $2$, Theorem~\ref{thm:Z} therefore follows from the
-corresponding statement over the two-element field $\F_2 = \Z/2$:
+Theorem~\ref{thm:Z} is the case $R = \Z$ of a complete dichotomy,
+which is the main result of this paper:
+
+\begin{theorem}[the dichotomy]\label{thm:dichotomy}
+Let $R$ be a commutative ring.  A complete binary polynomial over $R$
+exists if and only if $2$ is a unit of $R$.
+\end{theorem}
+
+Half of this is inexpensive: over any commutative ring in which $2$
+is invertible, the modest operation
+\[
+  p(x,y) \;=\; x^2 - y
+\]
+is complete --- a dozen lines of explicit algebra, presented in
+Section~\ref{sec:converse}, valid over $\Q$, $\mathbb{R}$,
+$\Z[\tfrac12]$, and $\F_p$ for every odd prime $p$.  (Over $\F_3$,
+for example, iterating $x^2 - y$ from the variables and constants
+produces \emph{every} polynomial in $\F_3[x,y]$.)
+
+\begin{theorem}\label{thm:converse}
+Let $R$ be a commutative ring with $\tfrac12 \in R$.  Then
+$q(x,y) := x^2 - y$ is complete: $\Clo(x^2 - y) = R[x,y]$.
+\end{theorem}
+
+The same derivation, run over $\Z$, fails exactly at the steps that
+divide by $2$; Theorem~\ref{thm:Z} says this failure is no accident
+of one derivation.
+
+Where should the negative half come from?  The first observation is
+that completeness survives reduction of coefficients: a ring
+homomorphism $R \to S$ carries any derivation of $x+y$ over $R$ ---
+by a \emph{derivation} we mean a formula building $x+y$ from the
+variables and constants by repeated application of $p$ --- to one
+over $S$.  Reducing mod $2$, Theorem~\ref{thm:Z} therefore follows
+from the corresponding statement over the two-element field
+$\F_2 = \Z/2$:
 
 \begin{theorem}\label{thm:F2}
 For every $q \in \F_2[x,y]$,
@@ -112,48 +141,103 @@ Two remarks on the statement.  First, polynomials here are
 polynomials induce the same function on $\F_2^2$, and
 Theorem~\ref{thm:F2} concerns the polynomials themselves, so it does
 not follow from (and does not contradict) the classical theory of
-functionally complete operations on finite sets.  Second --- and this
-matters for the reduction --- there is \emph{no hypothesis on $q$
-whatsoever}.  Reduction mod $2$ can collapse degree
+functionally complete operations on finite sets;
+Section~\ref{sec:precision} dwells on the distinction.  Second ---
+and this matters for the reduction --- there is \emph{no hypothesis
+on $q$ whatsoever}.  Reduction mod $2$ can collapse degree
 ($2x^3 + xy \mapsto xy$), so to deduce Theorem~\ref{thm:Z} one needs
 the $\F_2$-statement for completely arbitrary $q$, including the
 low-degree and degenerate ones.
 
-Passing to $\F_2$ is not merely a convenience; characteristic $2$ is
-where the obstruction actually lives.  In Section~\ref{sec:converse}
-we will see that over any commutative ring in which $2$ is invertible,
-the modest operation
-\[
-  p(x,y) \;=\; x^2 - y
-\]
-is complete --- a dozen lines of explicit algebra, valid over $\Q$,
-$\mathbb{R}$, $\Z[\tfrac12]$, and $\F_p$ for every odd prime $p$.  (Over
-$\F_3$, for example, iterating $x^2 - y$ from the variables and
-constants produces \emph{every} polynomial in $\F_3[x,y]$.)  The same
-derivation, run over $\Z$, fails exactly at the steps that divide by
-$2$; Theorem~\ref{thm:Z} says this failure is no accident of one
-derivation.  Summarizing both directions:
+Passing to $\F_2$ is not merely a convenience: characteristic $2$ is
+where the obstruction actually lives, and not only over the prime
+field.  The descent behind Theorem~\ref{thm:F2} generalizes to every
+\emph{perfect} field of characteristic $2$ (one in which every
+element has a square root --- all finite fields $\F_{2^k}$ and all
+algebraically closed fields, for instance), at the cost of a single
+coefficient twist explained in Section~\ref{sec:tothedichotomy}, and
+the disjunctive conclusion of Theorem~\ref{thm:F2} holds verbatim
+there; an arbitrary field of characteristic $2$ then embeds into its
+perfection, and non-membership in the clone descends along
+coefficient embeddings.  Hence:
 
-\begin{theorem}[the dichotomy]\label{thm:dichotomy}
-Let $R$ be a commutative ring.  A complete binary polynomial over $R$
-exists if and only if $2$ is a unit of $R$.
+\begin{theorem}\label{thm:char2}
+For every field $k$ of characteristic $2$ and every $q \in k[x,y]$,
+at least one of $x+y$, $xy$ lies outside $\Clo(q)$.  In particular,
+no field of characteristic $2$ admits a complete binary polynomial.
 \end{theorem}
 
-The ``only if'' direction stacks three reductions on top of the
-$\F_2$-argument.  First, the descent behind Theorem~\ref{thm:F2}
-generalizes to every \emph{perfect} field of characteristic $2$
-(one in which every element has a square root --- all finite fields
-$\F_{2^k}$ and all algebraically closed fields, for instance), at the
-cost of a single twist explained in Remark~\ref{rem:perfect}; the
-disjunctive conclusion of Theorem~\ref{thm:F2} holds verbatim there.
-Second, an arbitrary field of characteristic $2$ embeds into its
-perfection, and non-membership in the clone descends along coefficient
-embeddings, so in fact \emph{no field of characteristic $2$} admits a
-complete operation.  Third, if $2$ is not a unit of $R$, it lies in a
-maximal ideal; completeness pushes forward along the quotient map to
-the residue field, which has characteristic $2$.
+Finally, if $2$ is not a unit of $R$, it lies in a maximal ideal;
+completeness would push forward along the quotient map to the
+residue field, which has characteristic $2$.
+Section~\ref{sec:tothedichotomy} assembles these reductions into a
+proof of Theorem~\ref{thm:dichotomy}.
 
-\subsection{The shape of the proof, in words}\label{sec:shape}
+\subsection{What exactly is claimed}\label{sec:precision}
+
+Because the objects here are formal polynomials rather than
+functions, some care is needed about what
+Theorems~\ref{thm:Z}--\ref{thm:char2} do and do not assert; this
+subsection collects the necessary precision.
+
+In universal algebra, a \emph{clone} on a set $A$ is a family of
+finitary operations $A^n \to A$ containing all coordinate projections
+and closed under composition; the classical theory --- Post's lattice
+and its descendants --- studies such families of \emph{functions}
+\cite{Post,Szendrei}.  Our $\Clo(p)$ is not a clone in that sense, and
+we should say precisely what it is.  Its elements are formal
+polynomials, not maps; the standard home for these is the
+\emph{abstract} clone (equivalently, the Lawvere theory
+\cite{Lawvere}) of the variety of commutative $R$-algebras, whose
+$n$-ary component is exactly the polynomial ring
+$R[x_1, \dots, x_n]$, with substitution as composition.  Inside that
+abstract clone, $\Clo(p)$ is the binary component of the smallest
+subclone containing $p$, the constants, and the projections.
+(Restricting to the binary component loses nothing: any term built
+from $p$, constants, and two variables is itself a bivariate
+polynomial, whatever arities its subterms pass through.)  A reader who
+prefers to avoid clones altogether can take the low-tech view of
+Definition~\ref{def:clone} at face value: $R[x,y]$ carries the single
+binary operation $(f,g) \mapsto p(f,g)$, and $\Clo(p)$ is the
+subalgebra of this magma generated by $\{x, y\} \cup R$.
+
+How does the formal question relate to the classical functional one?
+Over an infinite integral domain a polynomial is determined by the
+function it induces, so over $\Z$ or $\Q$ our statements can equally
+be read in the function-clone world (on the infinite set $\Z$ or
+$\Q$, where the classical finite-domain theory is silent).  Over
+finite fields, however, the formal question is strictly finer than
+the functional one, and the two can give \emph{opposite verdicts on
+the same operation}:
+
+\begin{example}\label{ex:nand}
+NAND is a polynomial: $n(x,y) := 1 + xy \in \F_2[x,y]$ induces the
+Sheffer stroke on $\{0,1\}$, so the \emph{function} clone it generates
+contains every Boolean function --- functional completeness, no
+constants needed.  But $D(1+xy) = 1 \neq 0$, so the proof of
+Theorem~\ref{thm:F2} shows that the \emph{polynomial} $x + y$ is not a
+composition of $n$: every NAND-formula whose induced function is XOR
+yields a polynomial that agrees with $x+y$ only as a function on
+$\F_2^2$, never on the nose (the difference is a nonzero polynomial
+vanishing identically on $\F_2^2$, e.g.\ a multiple of $x^2 + x$).
+Thus on $\F_2$, functional completeness is abundant while formal
+completeness is impossible: Theorem~\ref{thm:F2} is invisible to
+function-clone theory.  In the other direction, over $\F_3$ our
+Theorem~\ref{thm:converse} produces every \emph{polynomial}, which is
+strictly more than producing every function.
+\end{example}
+
+Two further cautions about nearby terminology.  First, we admit all
+constants as generators; in the function-clone world this corresponds
+to \emph{completeness with constants}.  (The constant-free variant is
+also natural; we do not pursue it here.)  Second, the phrase
+\emph{polynomial completeness} has an established and quite different
+meaning in universal algebra --- that every congruence-compatible
+function on an algebra is induced by a polynomial, as in the
+monograph \cite{KaarliPixley} --- and our usage of ``complete'' should
+not be confused with it.
+
+\subsection{The shape of the negative proof, in words}\label{sec:shape}
 
 The substantial result is Theorem~\ref{thm:F2}, and the rest of this
 introduction previews its proof at leisure; the new idea is the
@@ -254,122 +338,7 @@ of roughly ninety lines, with every proof replayed through two
 independent kernels --- so the many edge cases, where an argument this
 dense is most fragile, are precisely what the verification rules out.
 
-\section{Terminology, and relation to classical completeness theory}
-\label{sec:context}
-
-\subsection{On the word ``clone''}\label{sec:cloneword}
-
-In universal algebra, a \emph{clone} on a set $A$ is a family of
-finitary operations $A^n \to A$ containing all coordinate projections
-and closed under composition; the classical theory --- Post's lattice
-and its descendants --- studies such families of \emph{functions}
-\cite{Post,Szendrei}.  Our $\Clo(p)$ is not a clone in that sense, and
-we should say precisely what it is.  Its elements are formal
-polynomials, not maps; the standard home for these is the
-\emph{abstract} clone (equivalently, the Lawvere theory
-\cite{Lawvere}) of the variety of commutative $R$-algebras, whose
-$n$-ary component is exactly the polynomial ring
-$R[x_1, \dots, x_n]$, with substitution as composition.  Inside that
-abstract clone, $\Clo(p)$ is the binary component of the smallest
-subclone containing $p$, the constants, and the projections.
-(Restricting to the binary component loses nothing: any term built
-from $p$, constants, and two variables is itself a bivariate
-polynomial, whatever arities its subterms pass through.)  A reader who
-prefers to avoid clones altogether can take the low-tech view of
-Definition~\ref{def:clone} at face value: $R[x,y]$ carries the single
-binary operation $(f,g) \mapsto p(f,g)$, and $\Clo(p)$ is the
-subalgebra of this magma generated by $\{x, y\} \cup R$.
-
-Two further cautions about nearby terminology.  First, we admit all
-constants as generators; in the function-clone world this corresponds
-to \emph{completeness with constants}.  (The constant-free variant is
-also natural; we do not pursue it here.)  Second, the phrase
-\emph{polynomial completeness} has an established and quite different
-meaning in universal algebra --- that every congruence-compatible
-function on an algebra is induced by a polynomial, as in the
-monograph \cite{KaarliPixley} --- and our usage of ``complete'' should
-not be confused with it.
-
-\subsection{Functional completeness, and why this question is
-different}\label{sec:functional}
-
-For operations-as-functions on a finite set, one-element completeness
-is classical territory.  Post's classification of the Boolean clones
-locates the Sheffer stroke \cite{Sheffer,Post}; Webb exhibited a
-single complete operation on every finite domain \cite{Webb}; and
-there are effective completeness criteria, from S{\l}upecki through
-Rousseau to Rosenberg's classification of the maximal function clones
-\cite{Slupecki,Rousseau,Rosenberg}.
-
-How does the present question relate?  Over an infinite integral
-domain a polynomial is determined by the function it induces, so over
-$\Z$ or $\Q$ our statements can equally be read in the function-clone
-world (on the infinite set $\Z$ or $\Q$, where the classical
-finite-domain theory is silent).  Over finite fields, however, the
-formal question is strictly finer than the functional one, and the
-two can give \emph{opposite verdicts on the same operation}:
-
-\begin{example}\label{ex:nand}
-NAND is a polynomial: $n(x,y) := 1 + xy \in \F_2[x,y]$ induces the
-Sheffer stroke on $\{0,1\}$, so the \emph{function} clone it generates
-contains every Boolean function --- functional completeness, no
-constants needed.  But $D(1+xy) = 1 \neq 0$, so the proof of
-Theorem~\ref{thm:F2} shows that the \emph{polynomial} $x + y$ is not a
-composition of $n$: every NAND-formula whose induced function is XOR
-yields a polynomial that agrees with $x+y$ only as a function on
-$\F_2^2$, never on the nose (the difference is a nonzero polynomial
-vanishing identically on $\F_2^2$, e.g.\ a multiple of $x^2 + x$).
-Thus on $\F_2$, functional completeness is abundant while formal
-completeness is impossible: Theorem~\ref{thm:F2} is invisible to
-function-clone theory.  In the other direction, over $\F_3$ our
-Theorem~\ref{thm:converse} produces every \emph{polynomial}, which is
-strictly more than producing every function.
-\end{example}
-
-In the latter direction, formal completeness does project onto a
-clean classical statement, which we record for universal algebraists.
-Recall that an algebra is \emph{functionally complete} if every
-finitary operation on its underlying set is a polynomial operation
-(= a term operation after all constants are adjoined).
-
-\begin{corollary}\label{cor:funcomplete}
-Let $F$ be a finite field of odd order.  Then the algebra
-$\langle F;\; x^2 - y \rangle$ with all constants adjoined is
-functionally complete: every function $F^n \to F$, for every $n$, is
-a composite of $x^2 - y$, constants, and variables.
-\end{corollary}
-
-\begin{proof}
-By Theorem~\ref{thm:converse} (proved in Section~\ref{sec:converse};
-$2$ is invertible in $F$), $x + y$ and $xy$ are composites of
-$x^2 - y$ and constants, hence so is every polynomial in any number
-of variables; and by Lagrange interpolation every function
-$F^n \to F$ is induced by a polynomial.
-\end{proof}
-
-\noindent
-Functional completeness criteria for finite algebras are classical
-territory, from Foster's primal algebras and the Foster--Pixley
-theory of semi-primal algebras \cite{Foster,FosterPixley} to Werner's
-discriminator varieties \cite{Werner}; Corollary~\ref{cor:funcomplete}
-places $\langle F;\, x^2 - y\rangle$ (with constants) inside that
-landscape, whereas Theorem~\ref{thm:F2}, by Example~\ref{ex:nand},
-lives strictly outside it.
-
-\subsection{Composition structures on polynomial rings}
-
-The composition structure of polynomial rings has its own literature
---- Menger's tri-operational algebras, Adler's composition rings, and
-near-ring theory for univariate composition \cite{Menger,Adler,Pilz},
-as well as Ritt's theory of decompositions of a single univariate
-polynomial \cite{Ritt}.  These study the composition structure of the
-full polynomial ring rather than generation from a single binary
-operation, and we have not found the present question addressed
-there.  We would be grateful for pointers to antecedents; the
-question is natural enough that we hesitate to claim novelty for
-anything but the answers.
-
-\section{Definitions and first reductions}\label{sec:prelim}
+\section{Definitions and conventions}\label{sec:prelim}
 
 \begin{definition}\label{def:clone}
 Let $R$ be a commutative ring and $p \in R[x,y]$.  The
@@ -417,9 +386,10 @@ In particular, if both $x+y, xy \in \Clo(p)$ over $\Z$, then both lie
 in $\Clo(\pi p)$ over $\F_2$.  So Theorem~\ref{thm:F2} (for
 \emph{arbitrary} $q = \pi p$, degenerate cases included) implies
 Theorem~\ref{thm:Z}, and likewise its analogue over any ring with a
-homomorphism to $\F_2$ ($\Z/2^k$, $\F_2$-algebras, \dots).  The rest
-of the paper, until Section~\ref{sec:converse}, takes place over
-$\F_2$.
+homomorphism to $\F_2$ ($\Z/2^k$, $\F_2$-algebras, \dots).
+Sections~\ref{sec:dichotomy} and~\ref{sec:descent} take place
+entirely over $\F_2$; general coefficients return in
+Section~\ref{sec:tothedichotomy}.
 
 \medskip
 
@@ -440,16 +410,96 @@ characteristic $2$:
         coefficient, being $0$ or $1$, is its own square root).
 \end{enumerate}
 
-\section{The derivative dichotomy over $\F_2$}\label{sec:dichotomy}
+One further convention.  Degrees of polynomials in one variable are
+taken with the convention that constants --- including the zero
+polynomial --- have degree $0$; under this convention
+$\deg(f^2) = 2\deg f$ holds without exception, which keeps the
+bookkeeping of the descent in Section~\ref{sec:descent} honest.
 
-Fix $q \in \F_2[x,y]$.
+\section{The positive half: $x^2 - y$}
+\label{sec:converse}
 
-\subsection{Parity decomposition}
+We begin with the positive half of the dichotomy, which is
+self-contained and shows concretely what the negative half must rule
+out.
+
+\begin{proof}[Proof of Theorem~\ref{thm:converse}]
+By Lemma~\ref{lem:criterion} it suffices to reach $x+y$ and $xy$.
+Everything flows from one identity:
+\begin{equation}\label{eq:master-id}
+  q\bigl(\alpha,\, q(\alpha', \gamma)\bigr)
+  = \alpha^2 - \alpha'^2 + \gamma .
+\end{equation}
+
+\emph{Translations.}  With constants
+$\alpha = \frac{d+1}{2}$, $\alpha' = \frac{d-1}{2}$,
+identity \eqref{eq:master-id} sends $\gamma \mapsto \gamma + d$, for
+any prescribed $d \in R$.  (This is the only step that uses
+$\tfrac12$.)  In particular $x + d, y + d \in \Clo(q)$ for all $d$.
+
+\emph{Slanted lines.}  $q(c, y) = c^2 - y$, then
+$q(x, c^2 - y) = x^2 + y - c^2$, then
+\[
+  q\bigl(x + d,\; x^2 + y - c^2\bigr) = 2dx - y + (d^2 + c^2)
+  \;\in\; \Clo(q),
+\]
+a line of slope $2d$ for every $d$, with constant adjustable by
+translations.
+
+\emph{Linear engine.}  For any $\alpha \in \Clo(q)$ and constant $k$,
+apply \eqref{eq:master-id} with outer argument $\alpha + k$ and inner
+argument $\alpha$: the increment is
+\[
+  \gamma \;\longmapsto\; (\alpha + k)^2 - \alpha^2 + \gamma
+  \;=\; \gamma + 2k\,\alpha + k^2 .
+\]
+Increments along slanted lines of two distinct slopes span all linear
+polynomials, so starting from $\gamma = 0$: \emph{every linear
+polynomial lies in $\Clo(q)$}, in particular $x + y$ and
+$x + \tfrac{y}{2}$.
+
+\emph{Scaled squares.}  The same engine with $\alpha = y^2 + \ell$
+(in the clone via $q(y, -\ell)$) adds $\lambda y^2 + \text{const}$ for
+any $\lambda$; from $\gamma = x^2 = q(x, 0)$ we get
+$x^2 + \tfrac14 y^2 \in \Clo(q)$.
+
+\emph{Finish.}
+\[
+  q\Bigl(x + \tfrac{y}{2},\; x^2 + \tfrac14 y^2\Bigr)
+  = \Bigl(x + \tfrac{y}{2}\Bigr)^2 - x^2 - \tfrac14 y^2
+  = xy . \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+All constants used lie in $\Z[\tfrac12]$, so the derivation runs
+verbatim over every ring in which $2$ is invertible --- in particular
+over $\Q$, $\mathbb{R}$, $\Z[\tfrac12]$, and $\F_p$ for odd $p$; over
+$\F_3$, the single operation $x^2 - y$ generates the full polynomial
+ring $\F_3[x,y]$.  Over $\Z$ the translation step requires
+realizing $d = c^2 - e^2$ with $c, e \in \Z$, which is possible only
+for $d \not\equiv 2 \pmod 4$; the increments available are then too
+even to span, and the derivation jams --- as, by Theorem~\ref{thm:Z},
+every derivation must.
+\end{remark}
+
+\begin{remark}
+Theorem~\ref{thm:converse} produces a complete operation of degree
+$2$.  We do not know the complete picture for higher degrees; see
+Section~\ref{sec:open}.
+\end{remark}
+
+\section{The negative half over $\F_2$}\label{sec:dichotomy}
+
+We turn to the negative half.  This section and the next prove
+Theorem~\ref{thm:F2}.  Fix $q \in \F_2[x,y]$.
+
+\subsection{Parity decomposition and the derivative dichotomy}
 
 Group the monomials $x^i y^j$ of $q$ into four classes by the parities
 of $(i,j)$.  Each class is an even-exponent polynomial times one of
 $1, x, y, xy$, and even-exponent polynomials are squares (fact 3
-above).  Hence $q$ can be written, uniquely, as
+of Section~\ref{sec:prelim}).  Hence $q$ can be written, uniquely, as
 \begin{equation}\label{eq:parity}
   q \;=\; A_0^2 \;+\; x A_1^2 \;+\; y A_2^2 \;+\; xy\,A_3^2,
   \qquad A_i \in \F_2[x,y].
@@ -467,7 +517,7 @@ $q \in \F_2[x^2, y] + \F_2[x, y^2]$, i.e.\ when $q$ partially factors
 through the squaring map.  The polynomial $A_3$ measures the failure
 of this degeneration, and the whole proof is organized around it.
 
-\subsection{The degenerate case $Dq = 0$: a conserved quantity}
+The degenerate case $Dq = 0$ is settled by a conserved quantity:
 
 \begin{lemma}[chain rule for $D$]\label{lem:cocycle}
 In characteristic $2$, for all $q, \alpha, \beta \in \F_2[x,y]$:
@@ -504,7 +554,8 @@ $D(xy) = 1$.
 From now on suppose $Dq \neq 0$, i.e.\ $A_3 \neq 0$; we must show
 $x + y \notin \Clo(q)$.
 
-\section{A rigidity property of substitution}\label{sec:tameness}
+\subsection{The rigidity property $(\dagger)$ and the master
+reduction}\label{sec:tameness}
 
 Write $\F_2[x{+}y]$ for the subring of polynomials in $x+y$ (the
 ``diagonal'' polynomials).  The proof of Theorem~\ref{thm:F2} in the
@@ -608,10 +659,8 @@ case.
 Throughout, $(\alpha, \beta)$ is a putative witness:
 $\alpha, \beta \in K[t]$ not both constant, $q(\alpha,\beta) = c$,
 $c$ transcendental.  A prime $'$ denotes $d/dt$.  Degrees are degrees
-in $t$, with the convention that constants --- including the zero
-polynomial --- have degree $0$; under this convention
-$\deg(\alpha_1^2) = 2\deg\alpha_1$ holds without exception, which
-keeps the bookkeeping of the descent honest.  Recall the two
+in $t$, under the convention of Section~\ref{sec:prelim} (constants,
+including the zero polynomial, have degree $0$).  Recall the two
 calculus facts, now over $K[t]$: squares have zero derivative; and
 conversely, since $K$ is algebraically closed (hence \emph{perfect}:
 every element has a square root), a polynomial in $K[t]$ with zero
@@ -877,8 +926,8 @@ whence $(AB)' = \Delta(A\alpha' + B\beta') = 0$ and $AB$ is a square.
 
 \emph{Fork, branch 1: $A$ and $B$ share a root $\theta$.}  Then
 $P := (\alpha(\theta), \beta(\theta))$ is a common zero of
-$h_x, h_y$, which by Lemmas~\ref{lem:keystone}
-and~\ref{lem:algpoint} has algebraic coordinates.  Evaluate the peel
+$h_x, h_y$, which by Lemmas~\ref{lem:algpoint}
+and~\ref{lem:keystone} has algebraic coordinates.  Evaluate the peel
 identity \eqref{eq:S} at $\theta$:
 \[
   S(\theta)^2 = w(P)^2\, h(P)
@@ -897,7 +946,28 @@ is impossible; so the descent is well-founded.)  \qed
 
 \medskip
 
-\begin{remark}[from $\F_2$ to the dichotomy]\label{rem:perfect}
+Assembling: Theorem~\ref{thm:descent} $\Rightarrow$ (bridge,
+Proposition~\ref{prop:bridge}) property $(\dagger)$ $\Rightarrow$
+(master reduction, Proposition~\ref{prop:master})
+$x+y \notin \Clo(q)$ when $Dq \neq 0$; together with Proposition~\ref{prop:Dzero} for
+$Dq = 0$, this proves Theorem~\ref{thm:F2}, and with
+Lemma~\ref{lem:transfer}, Theorem~\ref{thm:Z}.  \qed
+
+\section{From $\F_2$ to the dichotomy}\label{sec:tothedichotomy}
+
+Theorem~\ref{thm:F2} is the kernel of the negative half; the rest of
+Theorem~\ref{thm:dichotomy} follows from it by three short
+reductions, which we now record.
+
+\medskip
+\noindent\emph{Step 1: perfect fields, via a coefficient twist.}
+
+\begin{proposition}\label{prop:perfect}
+Let $k$ be a perfect field of characteristic $2$.  For every
+$q \in k[x,y]$, at least one of $x+y$, $xy$ lies outside $\Clo(q)$.
+\end{proposition}
+
+\begin{proof}
 The descent generalizes to any perfect coefficient field $k$ of
 characteristic $2$ with one modification.  The coefficients of $q$
 are no longer fixed by squaring, so in the halving branch the
@@ -908,108 +978,102 @@ each coefficient --- this is where perfectness enters).  The halving
 branch therefore produces a half-degree witness for $q^{(1/2)}$
 rather than for $q$; since the induction is on the witness degree
 with $q$ universally quantified inside, the twist is absorbed at no
-cost, and no periodicity argument is needed.  For an arbitrary field
-$k$ of characteristic $2$, embed $k$ into its perfection
-$k^{1/2^\infty}$: a derivation of $x+y$ (or $xy$) over $k$ maps to
-one over the perfection, contradicting the perfect case.  Finally,
-for a ring $R$ in which $2$ is not a unit, $2$ lies in a maximal
-ideal $\mathfrak m$, and a complete operation over $R$ would push
-forward along $R \to R/\mathfrak m$ to a complete operation over a
-field of characteristic $2$.  This proves
-Theorem~\ref{thm:dichotomy}.
-\end{remark}
-
-Assembling: Theorem~\ref{thm:descent} $\Rightarrow$ (bridge,
-Proposition~\ref{prop:bridge}) property $(\dagger)$ $\Rightarrow$
-(master reduction, Proposition~\ref{prop:master})
-$x+y \notin \Clo(q)$ when $Dq \neq 0$; together with Proposition~\ref{prop:Dzero} for
-$Dq = 0$, this proves Theorem~\ref{thm:F2}, and with
-Lemma~\ref{lem:transfer}, Theorem~\ref{thm:Z}.  \qed
-
-\section{Aftermath: completeness when $2$ is invertible}
-\label{sec:converse}
-
-We now show characteristic $2$ is the only obstruction, by exhibiting
-a complete operation everywhere else.  This section is independent of
-Sections~\ref{sec:dichotomy}--\ref{sec:descent}.
-
-\begin{theorem}\label{thm:converse}
-Let $R$ be a commutative ring with $\tfrac12 \in R$.  Then
-$q(x,y) := x^2 - y$ is complete: $\Clo(x^2 - y) = R[x,y]$.
-\end{theorem}
-
-\begin{proof}
-By Lemma~\ref{lem:criterion} it suffices to reach $x+y$ and $xy$.
-Everything flows from one identity:
-\begin{equation}\label{eq:master-id}
-  q\bigl(\alpha,\, q(\alpha', \gamma)\bigr)
-  = \alpha^2 - \alpha'^2 + \gamma .
-\end{equation}
-
-\emph{Translations.}  With constants
-$\alpha = \frac{d+1}{2}$, $\alpha' = \frac{d-1}{2}$,
-identity \eqref{eq:master-id} sends $\gamma \mapsto \gamma + d$, for
-any prescribed $d \in R$.  (This is the only step that uses
-$\tfrac12$.)  In particular $x + d, y + d \in \Clo(q)$ for all $d$.
-
-\emph{Slanted lines.}  $q(c, y) = c^2 - y$, then
-$q(x, c^2 - y) = x^2 + y - c^2$, then
-\[
-  q\bigl(x + d,\; x^2 + y - c^2\bigr) = 2dx - y + (d^2 + c^2)
-  \;\in\; \Clo(q),
-\]
-a line of slope $2d$ for every $d$, with constant adjustable by
-translations.
-
-\emph{Linear engine.}  For any $\alpha \in \Clo(q)$ and constant $k$,
-apply \eqref{eq:master-id} with outer argument $\alpha + k$ and inner
-argument $\alpha$: the increment is
-\[
-  \gamma \;\longmapsto\; (\alpha + k)^2 - \alpha^2 + \gamma
-  \;=\; \gamma + 2k\,\alpha + k^2 .
-\]
-Increments along slanted lines of two distinct slopes span all linear
-polynomials, so starting from $\gamma = 0$: \emph{every linear
-polynomial lies in $\Clo(q)$}, in particular $x + y$ and
-$x + \tfrac{y}{2}$.
-
-\emph{Scaled squares.}  The same engine with $\alpha = y^2 + \ell$
-(in the clone via $q(y, -\ell)$) adds $\lambda y^2 + \text{const}$ for
-any $\lambda$; from $\gamma = x^2 = q(x, 0)$ we get
-$x^2 + \tfrac14 y^2 \in \Clo(q)$.
-
-\emph{Finish.}
-\[
-  q\Bigl(x + \tfrac{y}{2},\; x^2 + \tfrac14 y^2\Bigr)
-  = \Bigl(x + \tfrac{y}{2}\Bigr)^2 - x^2 - \tfrac14 y^2
-  = xy . \qedhere
-\]
+cost, and no periodicity argument is needed.  The remaining
+ingredients --- the parity decomposition, the master reduction, and
+the bridge --- are unaffected, and the disjunctive conclusion follows
+as over $\F_2$.
 \end{proof}
 
-\begin{remark}
-All constants used lie in $\Z[\tfrac12]$, so the derivation runs
-verbatim over every ring in which $2$ is invertible --- in particular
-over $\Q$, $\mathbb{R}$, $\Z[\tfrac12]$, and $\F_p$ for odd $p$; over
-$\F_3$, the single operation $x^2 - y$ generates the full polynomial
-ring $\F_3[x,y]$.  Over $\Z$ the translation step requires
-realizing $d = c^2 - e^2$ with $c, e \in \Z$, which is possible only
-for $d \not\equiv 2 \pmod 4$; the increments available are then too
-even to span, and the derivation jams --- as, by Theorem~\ref{thm:Z},
-every derivation must.
-\end{remark}
+\medskip
+\noindent\emph{Step 2: arbitrary fields of characteristic $2$, via
+the perfection.}
 
-\begin{remark}
-Theorem~\ref{thm:converse} produces a complete operation of degree
-$2$.  We do not know the complete picture for higher degrees; see
-Section~\ref{sec:open}.
-\end{remark}
+\begin{proof}[Proof of Theorem~\ref{thm:char2}]
+An arbitrary field $k$ of characteristic $2$ embeds into its
+perfection $k^{1/2^\infty}$, which is perfect of characteristic $2$.
+The coefficient embedding is a ring homomorphism, so by the transfer
+lemma (Lemma~\ref{lem:transfer}) a derivation of $x+y$ (or $xy$) over
+$k$ maps to one over the perfection; if both $x+y$ and $xy$ lay in
+$\Clo(q)$ over $k$, both would lie in the clone over the perfection,
+contradicting Proposition~\ref{prop:perfect}.
+\end{proof}
+
+\medskip
+\noindent\emph{Step 3: rings in which $2$ is not a unit, via residue
+fields.}
+
+\begin{proof}[Proof of Theorem~\ref{thm:dichotomy}]
+If $2$ is a unit of $R$, the operation $x^2 - y$ is complete by
+Theorem~\ref{thm:converse}.  If $2$ is not a unit, it lies in a
+maximal ideal $\mathfrak m$, and a complete operation over $R$ would
+push forward along $R \to R/\mathfrak m$ (Lemma~\ref{lem:transfer}
+again) to a complete operation over the residue field, which has
+characteristic $2$ --- contradicting Theorem~\ref{thm:char2}.
+\end{proof}
+
+\section{Relation to classical completeness theory}
+\label{sec:context}
+
+For operations-as-functions on a finite set, one-element completeness
+is classical territory.  Post's classification of the Boolean clones
+locates the Sheffer stroke \cite{Sheffer,Post}; Webb exhibited a
+single complete operation on every finite domain \cite{Webb}; and
+there are effective completeness criteria, from S{\l}upecki through
+Rousseau to Rosenberg's classification of the maximal function clones
+\cite{Slupecki,Rousseau,Rosenberg}.
+
+Example~\ref{ex:nand} (Section~\ref{sec:precision}) showed that over
+finite fields the formal statements of this paper and the classical
+functional ones can diverge.  In the positive direction, however,
+formal completeness does project onto a clean classical statement,
+which we record for universal algebraists.
+Recall that an algebra is \emph{functionally complete} if every
+finitary operation on its underlying set is a polynomial operation
+(= a term operation after all constants are adjoined).
+
+\begin{corollary}\label{cor:funcomplete}
+Let $F$ be a finite field of odd order.  Then the algebra
+$\langle F;\; x^2 - y \rangle$ with all constants adjoined is
+functionally complete: every function $F^n \to F$, for every $n$, is
+a composite of $x^2 - y$, constants, and variables.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:converse} (proved in Section~\ref{sec:converse};
+$2$ is invertible in $F$), $x + y$ and $xy$ are composites of
+$x^2 - y$ and constants, hence so is every polynomial in any number
+of variables; and by Lagrange interpolation every function
+$F^n \to F$ is induced by a polynomial.
+\end{proof}
+
+\noindent
+Functional completeness criteria for finite algebras are classical
+territory, from Foster's primal algebras and the Foster--Pixley
+theory of semi-primal algebras \cite{Foster,FosterPixley} to Werner's
+discriminator varieties \cite{Werner}; Corollary~\ref{cor:funcomplete}
+places $\langle F;\, x^2 - y\rangle$ (with constants) inside that
+landscape, whereas Theorem~\ref{thm:F2}, by Example~\ref{ex:nand},
+lives strictly outside it.
+
+\medskip
+
+The composition structure of polynomial rings has its own literature
+--- Menger's tri-operational algebras, Adler's composition rings, and
+near-ring theory for univariate composition \cite{Menger,Adler,Pilz},
+as well as Ritt's theory of decompositions of a single univariate
+polynomial \cite{Ritt}.  These study the composition structure of the
+full polynomial ring rather than generation from a single binary
+operation, and we have not found the present question addressed
+there.  We would be grateful for pointers to antecedents; the
+question is natural enough that we hesitate to claim novelty for
+anything but the answers.
 
 \section{A note on formal verification}\label{sec:lean}
 
 The proofs above, especially the descent, involve a large amount of
 routine characteristic-$2$ manipulation, and we wanted an independent
-check.  All results stated here --- Theorems~\ref{thm:Z}, \ref{thm:F2}, \ref{thm:converse},
-\ref{thm:dichotomy} and the supporting lemmas --- have
+check.  All results stated here --- Theorems~\ref{thm:Z}, \ref{thm:dichotomy}, \ref{thm:converse},
+\ref{thm:F2} and the supporting lemmas --- have
 been verified in the Lean~4 proof assistant against the Mathlib
 library, with no unproved assumptions beyond Lean's standard
 foundational axioms.  The formal statements involve only the
@@ -1031,6 +1095,8 @@ declaration --- is available from the author and will be made public
 with the paper.
 
 \section{Open questions}\label{sec:open}
+
+\subsection*{Degrees and characterization}
 
 \begin{question}
 Which degrees admit complete operations over $\Q$?  Degree $2$ does
@@ -1084,29 +1150,7 @@ theorem here would likely also bear on
 Question~\ref{q:decidable}.
 \end{question}
 
-\begin{question}
-The same questions can be posed for the field of rational functions:
-preliminary calculations suggest $1/x - y$ is complete over
-$\Q(x,y)$ in a suitable sense.  Substitution of rational functions is
-a partial operation (denominators may vanish identically), so even
-stating this precisely requires a partial-clone formalism.
-\end{question}
-
-\begin{question}\label{q:ua}
-The universal-algebra side of the picture is wide open beyond
-Corollary~\ref{cor:funcomplete}, which adjoins all constants.
-Without constants: is $\langle F;\, x^2 - y \rangle$ \emph{primal}
-for every finite field $F$ of odd order --- is every finitary
-operation on $F$ a term operation of $x^2 - y$ alone?  (Rousseau's
-criterion \cite{Rousseau} reduces this to a concrete finite check for
-any one $F$; we have not pursued it.)  More broadly, we have
-attempted no Mal'cev-condition analysis of the algebras
-$\langle R;\, p \rangle$: which congruence conditions
-(permutability, distributivity, \dots) the varieties they generate
-satisfy, and whether these interact with completeness of $p$, are
-natural questions for universal algebraists that our methods do not
-touch.
-\end{question}
+\subsection*{Decidability}
 
 \begin{question}\label{q:decidable}
 Is membership in $\Clo(p)$ decidable?  Is completeness?
@@ -1152,6 +1196,34 @@ concrete instance of how
 little we know: for $q$ with $Dq = 0$, Theorem~\ref{thm:F2} settles
 $xy \notin \Clo(q)$, but we know no algorithm deciding, for such $q$,
 whether $x + y \in \Clo(q)$.
+
+\subsection*{Universal algebra}
+
+\begin{question}\label{q:ua}
+The universal-algebra side of the picture is wide open beyond
+Corollary~\ref{cor:funcomplete}, which adjoins all constants.
+Without constants: is $\langle F;\, x^2 - y \rangle$ \emph{primal}
+for every finite field $F$ of odd order --- is every finitary
+operation on $F$ a term operation of $x^2 - y$ alone?  (Rousseau's
+criterion \cite{Rousseau} reduces this to a concrete finite check for
+any one $F$; we have not pursued it.)  More broadly, we have
+attempted no Mal'cev-condition analysis of the algebras
+$\langle R;\, p \rangle$: which congruence conditions
+(permutability, distributivity, \dots) the varieties they generate
+satisfy, and whether these interact with completeness of $p$, are
+natural questions for universal algebraists that our methods do not
+touch.
+\end{question}
+
+\subsection*{Rational functions}
+
+\begin{question}
+The same questions can be posed for the field of rational functions:
+preliminary calculations suggest $1/x - y$ is complete over
+$\Q(x,y)$ in a suitable sense.  Substitution of rational functions is
+a partial operation (denominators may vanish identically), so even
+stating this precisely requires a partial-clone formalism.
+\end{question}
 
 \medskip
 \noindent\textbf{Draft note.}  All references below have been checked
