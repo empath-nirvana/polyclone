@@ -54,6 +54,32 @@ The development contains **no `sorry`, no custom axioms, no
 
 (Lean's standard foundational axioms).
 
+### Independent judge ([leanprover/comparator](https://github.com/leanprover/comparator))
+
+The four headline theorems are verified end-to-end by an adversarial
+judge in CI (workflow [`Comparator judge`](.github/workflows/comparator.yml)):
+the statements live in a standalone, ~90-line challenge module
+([`comparator/Challenge.lean`](comparator/Challenge.lean) — it does NOT
+import this library), and the judge checks that the library proves those
+exact statements from only the whitelisted axioms, replaying every proof
+through **two independent kernels**. From the CI log:
+
+```
+Exporting #[..., PolyClone.FrobeniusDescent.F2_master_conjecture,
+PolyClone.FrobeniusDescent.int_master, PolyClone.FrobeniusDescent.qOp_complete,
+PolyClone.Perfect.complete_iff_two_isUnit, propext, Classical.choice,
+Quot.sound, ...] from PolyClone
+Running nanoda kernel on solution
+Nanoda kernel accepts the solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+```
+
+To trust the headline results you need only read `Challenge.lean` (do
+the statements say what the paper claims?) and the judge's verdict —
+not this repository's proofs or build.
+
 ## Building
 
 Requires the Lean toolchain pinned in `lean-toolchain`.
