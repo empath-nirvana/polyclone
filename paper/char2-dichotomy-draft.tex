@@ -53,7 +53,7 @@ results have been checked formally.
 \subsection{A Sheffer stroke for $\Z[x,y]$?}
 
 Every Boolean function can be built from a single connective: NAND
-(the \emph{Sheffer stroke}).  One-element generating sets of this kind
+(the \emph{Sheffer stroke}) \cite{Sheffer,Post}.  One-element generating sets of this kind
 appear throughout algebra and logic, and it is natural to ask for an
 analogue one level up, with the two-element Boolean domain replaced by
 a ring of polynomials.
@@ -94,7 +94,9 @@ $\Clo(p)$.  In particular, no binary polynomial over $\Z$ is complete.
 
 Where should such a theorem come from?  The first observation is that
 completeness survives reduction of coefficients: a ring homomorphism
-$R \to S$ carries any derivation of $x+y$ over $R$ to one over $S$.
+$R \to S$ carries any derivation of $x+y$ over $R$ --- by a
+\emph{derivation} we mean a formula building $x+y$ from the variables
+and constants by repeated application of $p$ --- to one over $S$.
 Reducing mod $2$, Theorem~\ref{thm:Z} therefore follows from the
 corresponding statement over the two-element field $\F_2 = \Z/2$:
 
@@ -162,8 +164,9 @@ for real in Section~\ref{sec:descent}.
 \noindent\emph{Step 1: a derivative splits the problem.}
 Characteristic $2$ kills second derivatives in each single variable
 ($\partial_x^2 = \partial_y^2 = 0$) but not the mixed one, so the
-operator $D := \partial_x \partial_y$ carries unusual weight.  We
-split according to $Dq$.
+operator $D := \partial_x \partial_y$ carries unusual weight (all
+derivatives in this paper are formal partial derivatives of
+polynomials).  We split according to $Dq$.
 
 If $Dq = 0$ --- that is, no monomial of $q$ has both exponents odd ---
 then a pleasant chain-rule identity shows the property ``$Dg = 0$'' is
@@ -185,20 +188,23 @@ polynomials in $x+y$.  A short induction over the clone
 $x+y \notin \Clo(q)$.
 
 The rigidity property, in turn, is a statement about the \emph{level
-sets} of $q$.
+sets} of $q$ --- the loci $\{q = c\}$, $c$ a constant.
 Restricting everything to a generic line of the pencil
-$\{x + y = \text{const}\}$ converts it into the following concrete
+$\{x + y = \text{const}\}$ of parallel lines converts it into the
+following concrete
 geometric assertion: there is no pair of one-variable polynomials
 $\alpha(t), \beta(t)$, not both constant, with
 \[
   q\bigl(\alpha(t), \beta(t)\bigr) = c
 \]
 identically in $t$, where $c$ is a ``generic'' constant --- precisely,
-a constant transcendental over $\F_2$, living in a large
-algebraically closed field $K$ of characteristic $2$.  Such a pair
+a constant transcendental over $\F_2$ (satisfying no nonzero
+polynomial relation with $\F_2$-coefficients), living in a large
+algebraically closed field $K$ of characteristic $2$; the setting is
+fixed precisely in Section~\ref{sec:bridge}.  Such a pair
 $(\alpha, \beta)$ would be a polynomial-parametrized curve lying
 inside a single generic level set of $q$; we call it a
-\emph{witness}.  The task is to show witnesses do not exist when
+\emph{witness} (Definition~\ref{def:witness}).  The task is to show witnesses do not exist when
 $Dq \neq 0$.
 
 \medskip
@@ -240,7 +246,13 @@ Frobenius depth of the witness is immune to this.
 Because the argument has an unusual density of characteristic-$2$
 bookkeeping, we have verified all results formally; a short note on
 this appears in Section~\ref{sec:lean}, and the text otherwise
-presents proofs as ordinary mathematics.
+presents proofs as ordinary mathematics.  Specifically, every result
+is checked down to the proof kernel in Lean, and the headline theorems
+are additionally verified by an adversarial judge
+(\texttt{leanprover/comparator}) against a standalone statement file
+of roughly ninety lines, with every proof replayed through two
+independent kernels --- so the many edge cases, where an argument this
+dense is most fragile, are precisely what the verification rules out.
 
 \section{Terminology, and relation to classical completeness theory}
 \label{sec:context}
@@ -313,6 +325,36 @@ function-clone theory.  In the other direction, over $\F_3$ our
 Theorem~\ref{thm:converse} produces every \emph{polynomial}, which is
 strictly more than producing every function.
 \end{example}
+
+In the latter direction, formal completeness does project onto a
+clean classical statement, which we record for universal algebraists.
+Recall that an algebra is \emph{functionally complete} if every
+finitary operation on its underlying set is a polynomial operation
+(= a term operation after all constants are adjoined).
+
+\begin{corollary}\label{cor:funcomplete}
+Let $F$ be a finite field of odd order.  Then the algebra
+$\langle F;\; x^2 - y \rangle$ with all constants adjoined is
+functionally complete: every function $F^n \to F$, for every $n$, is
+a composite of $x^2 - y$, constants, and variables.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:converse} (proved in Section~\ref{sec:converse};
+$2$ is invertible in $F$), $x + y$ and $xy$ are composites of
+$x^2 - y$ and constants, hence so is every polynomial in any number
+of variables; and by Lagrange interpolation every function
+$F^n \to F$ is induced by a polynomial.
+\end{proof}
+
+\noindent
+Functional completeness criteria for finite algebras are classical
+territory, from Foster's primal algebras and the Foster--Pixley
+theory of semi-primal algebras \cite{Foster,FosterPixley} to Werner's
+discriminator varieties \cite{Werner}; Corollary~\ref{cor:funcomplete}
+places $\langle F;\, x^2 - y\rangle$ (with constants) inside that
+landscape, whereas Theorem~\ref{thm:F2}, by Example~\ref{ex:nand},
+lives strictly outside it.
 
 \subsection{Composition structures on polynomial rings}
 
@@ -620,7 +662,7 @@ $\partial_x q (P) = \partial_y q(P) = 0$: it is a \emph{critical
 point} of $q$.  In the warm-up case the critical equations read
 $A_1^2(P) = \beta(\theta)$ and $A_2^2(P) = \alpha(\theta)$ --- two
 polynomial equations over $\F_2$ pinning $P$ down; one shows (this is
-easy here, and is Lemmas~\ref{lem:keystone}--\ref{lem:algpoint} in
+easy here, and is Lemmas~\ref{lem:algpoint} and~\ref{lem:keystone} in
 general) that $P$ must have coordinates \emph{algebraic} over $\F_2$.
 But then $c = q(P)$ is algebraic --- contradicting transcendence of
 the level.  Generic level sets pass through no critical points; that
@@ -749,7 +791,8 @@ algebraic over $\F_2$.
 
 \begin{proof}[Proof sketch]
 Viewing $u, v$ in $\F_2(x)[y]$: a common divisor there would descend
-(Gauss's lemma) to a common factor in $\F_2[x,y]$, so they are
+(Gauss's lemma; see e.g.\ \cite[Ch.~IV]{Lang}) to a common factor in
+$\F_2[x,y]$, so they are
 coprime, and a cleared B\'ezout identity gives
 $su + tv = r(x) \neq 0$; evaluate at $(a,b)$ to get $r(a) = 0$.
 Symmetrically for $b$.
@@ -971,13 +1014,21 @@ been verified in the Lean~4 proof assistant against the Mathlib
 library, with no unproved assumptions beyond Lean's standard
 foundational axioms.  The formal statements involve only the
 fifteen-line definition of $\Clo$ reproduced in
-Appendix~\ref{app:lean}.  Two of the proofs presented above are
+Appendix~\ref{app:lean}.  In addition, the headline theorems are
+certified by an adversarial judge (\texttt{leanprover/comparator}):
+their statements live in a standalone challenge file of roughly
+ninety lines that does not import the development, and the judge
+replays all proofs through two independent proof kernels against
+those exact statements, so trusting the results requires reading only
+the challenge file and the verdict.  Two of the proofs presented above are
 actually simplifications found during the verification process: the
 derivative proof of the keystone (Lemma~\ref{lem:keystone}), which
 replaced a longer argument via perfect function fields, and the
 B\'ezout-certificate form of the kill lemma.  We will not say more
-about the formalization here; the development is available from the
-author.
+about the formalization here; the development --- including a
+blueprint mapping each informal statement of this paper to its formal
+declaration --- is available from the author and will be made public
+with the paper.
 
 \section{Open questions}\label{sec:open}
 
@@ -1041,6 +1092,22 @@ a partial operation (denominators may vanish identically), so even
 stating this precisely requires a partial-clone formalism.
 \end{question}
 
+\begin{question}\label{q:ua}
+The universal-algebra side of the picture is wide open beyond
+Corollary~\ref{cor:funcomplete}, which adjoins all constants.
+Without constants: is $\langle F;\, x^2 - y \rangle$ \emph{primal}
+for every finite field $F$ of odd order --- is every finitary
+operation on $F$ a term operation of $x^2 - y$ alone?  (Rousseau's
+criterion \cite{Rousseau} reduces this to a concrete finite check for
+any one $F$; we have not pursued it.)  More broadly, we have
+attempted no Mal'cev-condition analysis of the algebras
+$\langle R;\, p \rangle$: which congruence conditions
+(permutability, distributivity, \dots) the varieties they generate
+satisfy, and whether these interact with completeness of $p$, are
+natural questions for universal algebraists that our methods do not
+touch.
+\end{question}
+
 \begin{question}\label{q:decidable}
 Is membership in $\Clo(p)$ decidable?  Is completeness?
 \end{question}
@@ -1075,44 +1142,74 @@ Proposition~\ref{prop:master}.  A decision procedure would seem to
 require either a computable bound on derivation size, which
 cancellation conspires against, or a supply of such invariants
 complete enough to certify every non-membership; we possess neither,
-and we suspect the question is hard.  As a concrete instance of how
+and we suspect the question is hard.  For comparison: in the cousin
+problem of membership in the \emph{ideal} generated by given
+polynomials, the analogous degree question is settled --- doubly
+exponential degree bounds make ideal membership decidable, indeed
+EXPSPACE-complete by Mayr--Meyer \cite{MayrMeyer} --- and it is
+exactly such a bound that cancellation withholds here.  As a
+concrete instance of how
 little we know: for $q$ with $Dq = 0$, Theorem~\ref{thm:F2} settles
 $xy \notin \Clo(q)$, but we know no algorithm deciding, for such $q$,
 whether $x + y \in \Clo(q)$.
 
 \medskip
-\noindent\textbf{Draft note.}  The references below are reconstructed
-from memory and must be verified (and surely extended) before this
-goes anywhere; corrections welcome.
+\noindent\textbf{Draft note.}  All references below have been checked
+against the published record, with one exception: the issue and page
+numbers of the Menger item could not be confirmed against the
+original (the series and year are confirmed); it is marked in the
+source.  Further pointers, especially to antecedents of the main
+question, remain welcome.
 
 \begin{thebibliography}{99}
 
 \bibitem{Adler} I.~Adler, \emph{Composition rings}, Duke Math.\ J.\
 29 (1962), 607--623.
 
+\bibitem{Foster} A.~L.~Foster, \emph{Generalized ``Boolean'' theory
+of universal algebras.  Part II.  Identities and subdirect sums of
+functionally complete algebras}, Math.\ Z.\ 59 (1953), 191--199.
+
+\bibitem{FosterPixley} A.~L.~Foster and A.~F.~Pixley,
+\emph{Semi-categorical algebras.  I.  Semi-primal algebras}, Math.\
+Z.\ 83 (1964), 147--169.
+
 \bibitem{KaarliPixley} K.~Kaarli and A.~F.~Pixley, \emph{Polynomial
-Completeness in Algebraic Systems}, Chapman \& Hall/CRC, 2001.
+Completeness in Algebraic Systems}, Chapman \& Hall/CRC, Boca Raton,
+2001.
+
+\bibitem{Lang} S.~Lang, \emph{Algebra}, rev.\ 3rd ed., Graduate Texts
+in Mathematics 211, Springer, New York, 2002.
 
 \bibitem{Lawvere} F.~W.~Lawvere, \emph{Functorial semantics of
 algebraic theories}, Proc.\ Nat.\ Acad.\ Sci.\ USA 50 (1963),
 869--872.
 
+\bibitem{MayrMeyer} E.~W.~Mayr and A.~R.~Meyer, \emph{The complexity
+of the word problems for commutative semigroups and polynomial
+ideals}, Adv.\ in Math.\ 46 (1982), 305--329.
+
+% UNVERIFIED: issue and page numbers of the Menger entry could not be
+% confirmed against the original (series and year confirmed).
 \bibitem{Menger} K.~Menger, \emph{Tri-operational algebra}, Reports
 of a Mathematical Colloquium (2) 5/6 (1944), 3--10.
 
-\bibitem{Pilz} G.~Pilz, \emph{Near-Rings}, 2nd ed., North-Holland,
-1983.
+\bibitem{Pilz} G.~Pilz, \emph{Near-Rings: The Theory and its
+Applications}, rev.\ ed., North-Holland Mathematics Studies 23,
+North-Holland, Amsterdam, 1983.
 
 \bibitem{Post} E.~L.~Post, \emph{The Two-Valued Iterative Systems of
-Mathematical Logic}, Annals of Mathematics Studies 5, Princeton,
-1941.
+Mathematical Logic}, Annals of Mathematics Studies 5, Princeton
+University Press, Princeton, 1941.
 
 \bibitem{Ritt} J.~F.~Ritt, \emph{Prime and composite polynomials},
 Trans.\ Amer.\ Math.\ Soc.\ 23 (1922), 51--66.
 
 \bibitem{Rosenberg} I.~G.~Rosenberg, \emph{\"Uber die funktionale
-Vollst\"andigkeit in den mehrwertigen Logiken}, Rozpravy
-\v{C}eskoslovensk\'e Akad.\ V\v{e}d 80 (1970), 3--93.
+Vollst\"andigkeit in den mehrwertigen Logiken.  Struktur der
+Funktionen von mehreren Ver\"anderlichen auf endlichen Mengen},
+Rozpravy \v{C}eskoslovensk\'e Akad.\ V\v{e}d \v{R}ada Mat.\
+P\v{r}\'irod.\ V\v{e}d 80 (1970), no.~4, 3--93.
 
 \bibitem{Rousseau} G.~Rousseau, \emph{Completeness in finite algebras
 with a single operation}, Proc.\ Amer.\ Math.\ Soc.\ 18 (1967),
@@ -1123,8 +1220,10 @@ postulates for Boolean algebras, with application to logical
 constants}, Trans.\ Amer.\ Math.\ Soc.\ 14 (1913), 481--488.
 
 \bibitem{Slupecki} J.~S{\l}upecki, \emph{Kryterium pe{\l}no\'sci
-wielowarto\'sciowych system\'ow logiki zda\'n}, C.~R.\ S\'eanc.\
-Soc.\ Sci.\ Varsovie 32 (1939), 102--109.
+wielowarto\'sciowych system\'ow logiki zda\'n}, C.~R.\ S\'eances
+Soc.\ Sci.\ Lettres Varsovie Cl.~III 32 (1939), 102--109; English
+translation: \emph{A criterion of fullness of many-valued systems of
+propositional logic}, Studia Logica 30 (1972), 153--157.
 
 \bibitem{Szendrei} \'A.~Szendrei, \emph{Clones in Universal Algebra},
 S\'eminaire de Math\'ematiques Sup\'erieures 99, Presses de
@@ -1133,6 +1232,10 @@ l'Universit\'e de Montr\'eal, 1986.
 \bibitem{Webb} D.~L.~Webb, \emph{Generation of any $n$-valued logic
 by one binary operation}, Proc.\ Nat.\ Acad.\ Sci.\ USA 21 (1935),
 252--254.
+
+\bibitem{Werner} H.~Werner, \emph{Discriminator-Algebras: Algebraic
+Representation and Model Theoretic Properties}, Studien zur Algebra
+und ihre Anwendungen 6, Akademie-Verlag, Berlin, 1978.
 
 \end{thebibliography}
 
