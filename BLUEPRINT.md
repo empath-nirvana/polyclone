@@ -45,7 +45,7 @@ Let `D = ∂x∂y` (formal mixed partial; `PolyClone/DXDYCocycle.lean`).
 - `Diag` = the subalgebra `F₂[x+y]`; `Tame q` = "if `q(α,β)` is a
   nonconstant element of `F₂[x+y]` then `α, β ∈ F₂[x+y]`" (property (†)
   of the paper).
-- **Master reduction** (`master`): `Tame q ⟹ x+y ∉ Clo q`. *Proof:*
+- **From (†) to non-generation** (`master`): `Tame q ⟹ x+y ∉ Clo q`. *Proof:*
   clone induction with invariant "not in `F₂[x+y]`, or constant".
 
 ## 4. The curve world and the descent
@@ -59,7 +59,8 @@ constant and transcendental.
   `q = A₀² + x·A₁² + y·A₂² + xy·A₃²`; then `q_x = A₁² + y·A₃²`,
   `q_y = A₂² + x·A₃²`, `Dq = A₃²`. Full-gcd peel: `Aᵢ = w·Bᵢ` with the
   `Bᵢ` coprime, `q = A₀² + w²h`, `h = x·B₁² + y·B₂² + xy·B₃²`.
-- **Kill lemma** (`c_algebraic_of_curve_constraint`, `KillLemma.lean`):
+- **No algebraic relation along a witness**
+  (`c_algebraic_of_curve_constraint`, `KillLemma.lean`):
   no nonzero `f ∈ F₂[x,y]` vanishes along a witness. *Proof:* resultant
   Bezout certificate in `F₂[x,z][y]` for `f` and `q + z`; evaluate at
   the witness (char 2 kills both terms); powers of a nonconstant curve
@@ -68,23 +69,25 @@ constant and transcendental.
   a common zero in `K²` of two relatively prime elements of `F₂[x,y]`
   has algebraic coordinates. *Proof:* Gauss + Bezout over `F₂(x)[y]`,
   both variable orders.
-- **Keystone** (`hX_hY_relPrime`, `Perfectness.lean`): with the `Bᵢ`
+- **Coprimality of the peeled partials** (`hX_hY_relPrime`, `Perfectness.lean`): with the `Bᵢ`
   coprime and `B₃ ≠ 0`, `h_x` and `h_y` are relatively prime. *Proof:*
   char-2 Jacobian argument — a common prime `p ∤ B₃` gives
   `p | (∂x p)·u` with `p ∤ u` and `p ∤ ∂x p`.
 - **The descent** (`no_nonconstant_witness`, `Descent.lean`):
   `Dq ≠ 0 ⟹ no witness exists`. *Proof:* induction on
   `deg α + deg β`. Peel: `S := √c + A₀(α,β)` satisfies `S² = W²·H`, so
-  the moving level `H = h(α,β)` still has `H' = 0`. Engine: with
+  the moving level `H = h(α,β)` still has `H' = 0`. Derivative
+  identities: with
   `A = h_x(α,β)`, `B = h_y(α,β)`, `Δ = B₃(α,β)²`: `A' = Δβ'`,
-  `B' = Δα'`, `(AB)' = 0`, so `AB` is a square. Fork: a common root of
-  `A, B` is an algebraic critical point of `h` (keystone + algebraic
+  `B' = Δα'`, `(AB)' = 0`, so `AB` is a square. Two cases: a common root of
+  `A, B` is an algebraic critical point of `h` (peeled-partials
+  coprimality + algebraic
   points), making `√c` algebraic — contradiction; otherwise `A, B` are
   coprime squares, forcing `α = α₁², β = β₁²`, and (coefficients
   Frobenius-fixed over F₂; coefficient-twisted `q^{(1/2)}` in the
   perfect-field version, `Perfect/Defs.lean: half2`) `(α₁, β₁)` is a
   witness at half the degree.
-- **Bridge** (`tame_of_D_ne_zero`, `Bridge.lean`): no witness ⟹ `Tame`.
+- **From curves to (†)** (`tame_of_D_ne_zero`, `Bridge.lean`): no witness ⟹ `Tame`.
   *Proof:* restrict to the generic line `(t, t+σ)`; a polynomial
   constant on it lies in `F₂[x+y]`.
 
@@ -102,7 +105,7 @@ constant and transcendental.
 - `qOp_complete` (`FrobeniusDescent/CharTwoDichotomy.lean`): `x² − y`
   generates `R[x,y]` whenever `2` is invertible. *Proof:* explicit
   12-step
-  derivation (translations, slanted lines, linear engine, scaled
+  derivation (translations, slanted lines, linear span step, scaled
   squares), verified from a symbolically pre-checked certificate.
 - `complete_iff_two_isUnit` (`Perfect/Dichotomy.lean`): **a single
   generating binary polynomial exists over a commutative ring `R` iff

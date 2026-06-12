@@ -52,13 +52,13 @@ times it factors through the squaring map.
 | `Dq = 0 ⟹ xy ∉ Clo q` (derivative cocycle) | `XY_not_in_Clo` (`DXDYCocycle.lean`) |
 | diagonal-rigidity reduction | `master` (`Tameness.lean`) |
 | the Frobenius descent | `no_nonconstant_witness` (`FrobeniusDescent/Descent.lean`) |
-| curve constraint ⟹ level algebraic (kill lemma) | `c_algebraic_of_curve_constraint` (`FrobeniusDescent/KillLemma.lean`) |
+| no algebraic relation along a witness (curve constraint ⟹ level algebraic) | `c_algebraic_of_curve_constraint` (`FrobeniusDescent/KillLemma.lean`) |
 | common zero of coprime pair is algebraic | `algebraic_point` (`FrobeniusDescent/AlgebraicPoint.lean`) |
-| `h_x, h_y` coprime after the peel (keystone) | `hX_hY_relPrime` (`FrobeniusDescent/Perfectness.lean`) |
+| coprimality of the peeled partials (`h_x, h_y` coprime after the peel) | `hX_hY_relPrime` (`FrobeniusDescent/Perfectness.lean`) |
 
 **Semiring companion** (`Naturals.lean`, `ZeroSumFreeSemiring.lean`):
 over the semiring `ℕ` — where subtraction is unavailable and the ring
-dichotomy does not apply — the master theorem holds at the level of
+dichotomy does not apply — the disjunction theorem holds at the level of
 *functions*: no polynomial binary operation on `ℕ` reaches both `+` and
 `×` by composition (`polynomial_does_not_reach_both`). The easy halves
 generalize to every zero-sum-free (canonically ordered) commutative

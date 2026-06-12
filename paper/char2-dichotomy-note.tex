@@ -173,7 +173,7 @@ $q(x, c^2 - y) = x^2 + y - c^2$, then
 a line of slope $2d$ for every $d$, constant adjustable by
 translations.
 
-\emph{Linear engine.}  For $\alpha \in \Clo(q)$ and constant $k$,
+\emph{Linear span step.}  For $\alpha \in \Clo(q)$ and constant $k$,
 \eqref{eq:master-id} with outer argument $\alpha + k$ and inner
 argument $\alpha$ gives the increment
 \[
@@ -183,7 +183,7 @@ Increments along slanted lines of two distinct slopes span all
 linear polynomials, so from $\gamma = 0$: every linear polynomial
 lies in $\Clo(q)$, in particular $x + y$ and $x + \tfrac{y}{2}$.
 
-\emph{Scaled squares.}  The engine with $\alpha = y^2 + \ell$ (in the
+\emph{Scaled squares.}  The increment step with $\alpha = y^2 + \ell$ (in the
 clone via $q(y, -\ell)$) adds $\lambda y^2 + \text{const}$ for any
 $\lambda$; from $\gamma = x^2 = q(x, 0)$ we get
 $x^2 + \tfrac14 y^2 \in \Clo(q)$.
@@ -251,7 +251,7 @@ polynomials in $x+y$.  The proof runs through the rigidity property
   $\alpha, \beta \in \F_2[x{+}y]$.
 \end{quote}
 
-\begin{proposition}[master reduction]\label{prop:master}
+\begin{proposition}[from $(\dagger)$ to non-generation]\label{prop:master}
 If $q$ satisfies $(\dagger)$ then $x + y \notin \Clo(q)$.
 \end{proposition}
 
@@ -279,7 +279,7 @@ constant, with $q(\alpha, \beta) = c$ constant and $c$
 transcendental.
 \end{definition}
 
-\begin{proposition}[bridge]\label{prop:bridge}
+\begin{proposition}[from curves to $(\dagger)$]\label{prop:bridge}
 If no witness exists, then $q$ satisfies $(\dagger)$.
 \end{proposition}
 
@@ -318,11 +318,12 @@ no common nonunit factor and
 \end{equation}
 with $B_3 \neq 0$ and partials
 $h_x = B_1^2 + y B_3^2$, $h_y = B_2^2 + x B_3^2$, $Dh = B_3^2$.
-The peel \eqref{eq:peel} removes the possible curve of critical
-points of $q$ along $\{w = 0\}$; Lemma~\ref{lem:keystone} shows none
-survives in $h$.  Three lemmas, then the descent.
+We call the gcd extraction \eqref{eq:peel} the \emph{peel}; it
+removes the possible curve of critical points of $q$ along
+$\{w = 0\}$, and Lemma~\ref{lem:keystone} shows none survives in
+$h$.  Three lemmas, then the descent.
 
-\begin{lemma}[kill lemma]\label{lem:kill}
+\begin{lemma}[no algebraic relation along a witness]\label{lem:kill}
 Let $(\alpha,\beta)$ be a witness with level $c$, and
 $f \in \F_2[x,y]$, $f \neq 0$.  Then $f(\alpha,\beta) \neq 0$ in
 $K[t]$.
@@ -356,7 +357,7 @@ cleared B\'ezout identity gives $su + tv = r(x) \neq 0$, and
 evaluation at $(a,b)$ gives $r(a) = 0$.  Symmetrically for $b$.
 \end{proof}
 
-\begin{lemma}[keystone]\label{lem:keystone}
+\begin{lemma}[coprimality of the peeled partials]\label{lem:keystone}
 Let $B_1, B_2, B_3 \in \F_2[x,y]$ have no common nonunit factor, with
 $B_3 \neq 0$, and set $h_x := B_1^2 + y B_3^2$,
 $h_y := B_2^2 + x B_3^2$.  Then $h_x$ and $h_y$ have no common
@@ -413,7 +414,7 @@ using $(u+v)^2 = u^2 + v^2$,
 differentiating ($W^2$ and $S^2$ are squares) gives $W^2 H' = 0$,
 so $H' = 0$.
 
-\emph{Engine.}  The chain rule for $h$, with
+\emph{Derivative identities.}  The chain rule for $h$, with
 $\partial_x h_x = \partial_y h_y = 0$ and
 $\partial_y h_x = \partial_x h_y = Dh = B_3^2$, gives
 \[
@@ -423,7 +424,7 @@ $\partial_y h_x = \partial_x h_y = Dh = B_3^2$, gives
 whence $(AB)' = \Delta(B\beta' + A\alpha') = 0$ and $AB$ is a square
 in $K[t]$.
 
-\emph{Fork, branch 1: $A$ and $B$ share a root $\theta \in K$.}  Then
+\emph{Case 1: $A$ and $B$ share a root $\theta \in K$.}  Then
 $P := (\alpha(\theta), \beta(\theta))$ is a common zero of
 $h_x, h_y$, which by Lemmas~\ref{lem:keystone}
 and~\ref{lem:algpoint} has algebraic coordinates.  Evaluating
@@ -431,10 +432,10 @@ and~\ref{lem:algpoint} has algebraic coordinates.  Evaluating
 hence so is $S(\theta)$, hence so is $r = S(\theta) + A_0(P)$ ---
 contradicting transcendence of $r$.
 
-\emph{Fork, branch 2: $A, B$ coprime.}  Coprime factors of a square
+\emph{Case 2: $A, B$ coprime.}  Coprime factors of a square
 are squares (units of $K[t]$ are constants of the algebraically
 closed $K$, hence squares), so $A' = B' = 0$; since $\Delta \neq 0$,
-the engine identities force $\alpha' = \beta' = 0$, so
+the derivative identities force $\alpha' = \beta' = 0$, so
 $\alpha = \alpha_1^2$, $\beta = \beta_1^2$ with
 $\deg\alpha_1 + \deg\beta_1 = n/2$.  Because the coefficients of $q$
 lie in $\F_2$, squaring commutes with substitution into $q$:
@@ -467,8 +468,9 @@ $q(\alpha_1^2, \beta_1^2) = q^{(1/2)}(\alpha_1, \beta_1)^2$, where
 $q^{(1/2)}$ applies the inverse Frobenius to each coefficient
 (perfectness enters here); the halved pair is a witness for
 $q^{(1/2)}$, and since the induction is on witness degree with $q$
-universally quantified inside, the twist is absorbed.  Parity
-decomposition, bridge, and master reduction are unaffected.
+universally quantified inside, the twist is absorbed.  The parity
+decomposition, Proposition~\ref{prop:bridge}, and
+Proposition~\ref{prop:master} are unaffected.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:char2}]
