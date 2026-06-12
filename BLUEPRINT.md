@@ -6,7 +6,8 @@ file, in dependency order. The intent is that a mathematician with no
 Lean fluency can (1) check that the *statements* formalize the intended
 mathematics, and (2) follow the proof architecture. Polynomials are
 **formal** objects throughout; see the precision paragraph in README.md
-for the polynomial-clone vs full-clone distinction.
+for the relation to clones of operations. (Declaration names use
+`complete` for the generation property `Clo p = R[x,y]`.)
 
 ## 0. Trust base (the only definitions a skeptic must read)
 
@@ -99,11 +100,13 @@ constant and transcendental.
   the same over ℤ (mod-2 coefficient transfer; the degree-free F₂
   statement absorbs the degree drop of reduction).
 - `qOp_complete` (`FrobeniusDescent/CharTwoDichotomy.lean`): `x² − y`
-  is complete whenever `2` is invertible. *Proof:* explicit 12-step
+  generates `R[x,y]` whenever `2` is invertible. *Proof:* explicit
+  12-step
   derivation (translations, slanted lines, linear engine, scaled
   squares), verified from a symbolically pre-checked certificate.
-- `complete_iff_two_isUnit` (`Perfect/Dichotomy.lean`): **a complete
-  binary polynomial exists over a commutative ring `R` iff `2 ∈ R×`.**
+- `complete_iff_two_isUnit` (`Perfect/Dichotomy.lean`): **a single
+  generating binary polynomial exists over a commutative ring `R` iff
+  `2 ∈ R×`.**
   (Residue-field reduction for the forward direction.)
 
 ## 6. Semiring companion
@@ -122,8 +125,8 @@ constant and transcendental.
 - No Mal'cev-condition analysis of `⟨R, p⟩`.
 - Functional completeness over finite fields follows only in the form:
   for odd `q`, `⟨F_q; x²−y⟩` *with constants* is polynomially complete
-  (our completeness + Lagrange interpolation); this corollary is not
-  itself formalized.
+  in the classical sense (our generation theorem + Lagrange
+  interpolation); this corollary is not itself formalized.
 
 ## Verification status
 

@@ -22,7 +22,7 @@
 \newcommand{\Clo}{\mathrm{Clo}}
 \newcommand{\Fbar}{\overline{\F}_2}
 
-\title{One-operation completeness for polynomial rings:\\
+\title{Single generators of polynomial rings under composition:\\
 a characteristic-two dichotomy\\[1ex] {\large\normalfont --- draft ---}}
 \author{John Thompson}
 \date{June 2026}
@@ -37,11 +37,12 @@ is there a single binary polynomial $p$ such that every polynomial in
 two variables can be written as an iterated composition of $p$
 (starting from the variables and constants)?  Over $\Z$ the answer is
 no: for every $p \in \Z[x,y]$, at least one of $x+y$, $xy$ is
-inexpressible.  More generally, a complete binary polynomial exists
-over a commutative ring $R$ if and only if $2$ is invertible in $R$:
-when it is, the single operation $p(x,y) = x^2 - y$ already generates
-everything; when it is not, completeness fails through a residue
-field of characteristic $2$.  The main work is the negative result
+inexpressible.  More generally, there is a single polynomial
+generating all of $R[x,y]$ under composition (with variables and
+constants) if and only if $2$ is invertible in $R$: when it is, the
+single operation $p(x,y) = x^2 - y$ generates everything; when it is
+not, generation fails through a residue field of characteristic $2$.
+The main work is the negative result
 over fields of characteristic $2$, proved by an infinite descent
 whose decreasing quantity is, informally, the number of times a
 would-be counterexample factors through the squaring map.  All
@@ -67,45 +68,46 @@ and we are given \emph{one} binary polynomial $p(x,y)$ as our only
 ``connective'': whenever $f$ and $g$ have been built, we may build
 $p(f,g)$.  Write $\Clo(p)$ for the set of all polynomials obtainable
 this way (a precise definition is in Section~\ref{sec:prelim};
-Section~\ref{sec:precision} explains how this relates to --- and differs
-from --- the standard notion of a \emph{clone} in universal algebra,
-and no background from that subject is needed).  Call
-$p$ \emph{complete} if $\Clo(p) = \Z[x,y]$ --- if the single
-operation $p$ generates everything.
+Section~\ref{sec:precision} explains how this relates to the standard
+notion of a \emph{clone} in universal algebra; no background from
+that subject is needed).  Say that $p$ \emph{generates} $\Z[x,y]$ if
+$\Clo(p) = \Z[x,y]$.
 
-Could a complete $p$ exist?  Nothing obvious rules it out; a single
+Could such a $p$ exist?  Nothing obvious rules it out; a single
 polynomial has plenty of room to encode both an ``additive'' and a
 ``multiplicative'' mode, depending on what is substituted into it.
 And since every polynomial is built from variables and constants by
-$+$ and $\times$, completeness is equivalent to just two
+$+$ and $\times$, generation is equivalent to just two
 memberships (Lemma~\ref{lem:criterion}):
 \[
-  p \ \text{complete} \iff x + y \in \Clo(p) \ \text{ and } \
+  \Clo(p) = \Z[x,y] \iff x + y \in \Clo(p) \ \text{ and } \
   xy \in \Clo(p).
 \]
 Our first result is that no single polynomial achieves even this.
 
 \begin{theorem}\label{thm:Z}
 For every $p \in \Z[x,y]$, at least one of $x+y$, $xy$ lies outside
-$\Clo(p)$.  In particular, no binary polynomial over $\Z$ is complete.
+$\Clo(p)$.  In particular, no binary polynomial generates $\Z[x,y]$.
 \end{theorem}
 
 \subsection{Results}\label{sec:results}
 
-Theorem~\ref{thm:Z} is the case $R = \Z$ of a complete dichotomy,
-which is the main result of this paper:
+Theorem~\ref{thm:Z} is the case $R = \Z$ of a dichotomy over
+arbitrary commutative rings, which is the main result of this paper:
 
 \begin{theorem}[the dichotomy]\label{thm:dichotomy}
-Let $R$ be a commutative ring.  A complete binary polynomial over $R$
-exists if and only if $2$ is a unit of $R$.
+Let $R$ be a commutative ring.  There is a single polynomial
+generating all of $R[x,y]$ under composition (with variables and
+constants) if and only if $2$ is a unit of $R$.
 \end{theorem}
 
-Half of this is inexpensive: over any commutative ring in which $2$
-is invertible, the modest operation
+Half of this is easy: over any commutative ring in which $2$
+is invertible, the operation
 \[
   p(x,y) \;=\; x^2 - y
 \]
-is complete --- a dozen lines of explicit algebra, presented in
+generates the full polynomial ring --- a dozen lines of explicit
+algebra, presented in
 Section~\ref{sec:converse}, valid over $\Q$, $\mathbb{R}$,
 $\Z[\tfrac12]$, and $\F_p$ for every odd prime $p$.  (Over $\F_3$,
 for example, iterating $x^2 - y$ from the variables and constants
@@ -113,15 +115,16 @@ produces \emph{every} polynomial in $\F_3[x,y]$.)
 
 \begin{theorem}\label{thm:converse}
 Let $R$ be a commutative ring with $\tfrac12 \in R$.  Then
-$q(x,y) := x^2 - y$ is complete: $\Clo(x^2 - y) = R[x,y]$.
+$q(x,y) := x^2 - y$ generates the full polynomial ring:
+$\Clo(x^2 - y) = R[x,y]$.
 \end{theorem}
 
 The same derivation, run over $\Z$, fails exactly at the steps that
 divide by $2$; Theorem~\ref{thm:Z} says this failure is no accident
 of one derivation.
 
-Where should the negative half come from?  The first observation is
-that completeness survives reduction of coefficients: a ring
+The negative half starts from the observation
+that generation survives reduction of coefficients: a ring
 homomorphism $R \to S$ carries any derivation of $x+y$ over $R$ ---
 by a \emph{derivation} we mean a formula building $x+y$ from the
 variables and constants by repeated application of $p$ --- to one
@@ -146,11 +149,11 @@ Section~\ref{sec:precision} dwells on the distinction.  Second ---
 and this matters for the reduction --- there is \emph{no hypothesis
 on $q$ whatsoever}.  Reduction mod $2$ can collapse degree
 ($2x^3 + xy \mapsto xy$), so to deduce Theorem~\ref{thm:Z} one needs
-the $\F_2$-statement for completely arbitrary $q$, including the
+the $\F_2$-statement for arbitrary $q$, including the
 low-degree and degenerate ones.
 
 Passing to $\F_2$ is not merely a convenience: characteristic $2$ is
-where the obstruction actually lives, and not only over the prime
+where the obstruction lies, and not only over the prime
 field.  The descent behind Theorem~\ref{thm:F2} generalizes to every
 \emph{perfect} field of characteristic $2$ (one in which every
 element has a square root --- all finite fields $\F_{2^k}$ and all
@@ -164,11 +167,12 @@ coefficient embeddings.  Hence:
 \begin{theorem}\label{thm:char2}
 For every field $k$ of characteristic $2$ and every $q \in k[x,y]$,
 at least one of $x+y$, $xy$ lies outside $\Clo(q)$.  In particular,
-no field of characteristic $2$ admits a complete binary polynomial.
+over a field $k$ of characteristic $2$ no single binary polynomial
+generates $k[x,y]$.
 \end{theorem}
 
-Finally, if $2$ is not a unit of $R$, it lies in a maximal ideal;
-completeness would push forward along the quotient map to the
+Finally, if $2$ is not a unit of $R$, it lies in a maximal ideal; a
+generator would push forward along the quotient map to the
 residue field, which has characteristic $2$.
 Section~\ref{sec:tothedichotomy} assembles these reductions into a
 proof of Theorem~\ref{thm:dichotomy}.
@@ -184,58 +188,52 @@ In universal algebra, a \emph{clone} on a set $A$ is a family of
 finitary operations $A^n \to A$ containing all coordinate projections
 and closed under composition; the classical theory --- Post's lattice
 and its descendants --- studies such families of \emph{functions}
-\cite{Post,Szendrei}.  Our $\Clo(p)$ is not a clone in that sense, and
-we should say precisely what it is.  Its elements are formal
-polynomials, not maps; the standard home for these is the
-\emph{abstract} clone (equivalently, the Lawvere theory
-\cite{Lawvere}) of the variety of commutative $R$-algebras, whose
-$n$-ary component is exactly the polynomial ring
-$R[x_1, \dots, x_n]$, with substitution as composition.  Inside that
-abstract clone, $\Clo(p)$ is the binary component of the smallest
-subclone containing $p$, the constants, and the projections.
-(Restricting to the binary component loses nothing: any term built
-from $p$, constants, and two variables is itself a bivariate
-polynomial, whatever arities its subterms pass through.)  A reader who
-prefers to avoid clones altogether can take the low-tech view of
+\cite{Post,Szendrei}.  The elements of $\Clo(p)$ are instead formal
+polynomials, not maps.  In clone-theoretic terms: the binary terms in
+the language of commutative rings with constant symbols form the
+binary part of an abstract clone (equivalently, of a Lawvere theory
+\cite{Lawvere}), canonically identified with $R[x,y]$ under
+substitution, and our question asks when the single term $p$
+generates it.  (Restricting to the binary part loses nothing: any
+term built from $p$, constants, and two variables is itself a
+bivariate polynomial, whatever arities its subterms pass through.)
+This abstract object is represented faithfully by operations on $R$
+when $R$ is an infinite integral domain, and is finer than its image
+otherwise; it should not be confused with the clone of polynomial
+\emph{operations} of the ring $R$ in the sense of the
+universal-algebra literature \cite{KaarliPixley,Szendrei}, nor with
+the full clone of all finitary operations on the set $R$.  A reader
+who prefers to avoid clones altogether can take the low-tech view of
 Definition~\ref{def:clone} at face value: $R[x,y]$ carries the single
 binary operation $(f,g) \mapsto p(f,g)$, and $\Clo(p)$ is the
 subalgebra of this magma generated by $\{x, y\} \cup R$.
 
-How does the formal question relate to the classical functional one?
 Over an infinite integral domain a polynomial is determined by the
 function it induces, so over $\Z$ or $\Q$ our statements can equally
-be read in the function-clone world (on the infinite set $\Z$ or
+be read as statements about operations (on the infinite set $\Z$ or
 $\Q$, where the classical finite-domain theory is silent).  Over
-finite fields, however, the formal question is strictly finer than
-the functional one, and the two can give \emph{opposite verdicts on
-the same operation}:
+finite fields the formal question is strictly finer than the
+functional one:
 
 \begin{example}\label{ex:nand}
-NAND is a polynomial: $n(x,y) := 1 + xy \in \F_2[x,y]$ induces the
-Sheffer stroke on $\{0,1\}$, so the \emph{function} clone it generates
-contains every Boolean function --- functional completeness, no
-constants needed.  But $D(1+xy) = 1 \neq 0$, so the proof of
-Theorem~\ref{thm:F2} shows that the \emph{polynomial} $x + y$ is not a
-composition of $n$: every NAND-formula whose induced function is XOR
-yields a polynomial that agrees with $x+y$ only as a function on
-$\F_2^2$, never on the nose (the difference is a nonzero polynomial
-vanishing identically on $\F_2^2$, e.g.\ a multiple of $x^2 + x$).
-Thus on $\F_2$, functional completeness is abundant while formal
-completeness is impossible: Theorem~\ref{thm:F2} is invisible to
-function-clone theory.  In the other direction, over $\F_3$ our
-Theorem~\ref{thm:converse} produces every \emph{polynomial}, which is
-strictly more than producing every function.
+The distinction between formal polynomials and the functions they
+induce matters over finite fields.  For example,
+$n(x,y) := 1 + xy \in \F_2[x,y]$ induces the binary NAND operation on
+$\F_2$, and every Boolean function is a composition of NAND;
+nevertheless $x + y \notin \Clo(n)$ by Theorem~\ref{thm:F2}, since
+$Dn = 1 \neq 0$ for the mixed-derivative operator $D$ of
+Section~\ref{sec:dichotomy}.
 \end{example}
 
 Two further cautions about nearby terminology.  First, we admit all
 constants as generators; in the function-clone world this corresponds
-to \emph{completeness with constants}.  (The constant-free variant is
-also natural; we do not pursue it here.)  Second, the phrase
-\emph{polynomial completeness} has an established and quite different
-meaning in universal algebra --- that every congruence-compatible
-function on an algebra is induced by a polynomial, as in the
-monograph \cite{KaarliPixley} --- and our usage of ``complete'' should
-not be confused with it.
+to \emph{completeness with constants} in the classical functional
+sense.  (The constant-free variant is also natural; we do not pursue
+it here.)  Second, the phrase \emph{polynomial completeness} has an
+established meaning in universal algebra --- that every
+congruence-compatible function on an algebra is induced by a
+polynomial, as in the monograph \cite{KaarliPixley} --- unrelated to
+the generation property studied here.
 
 \subsection{The shape of the negative proof, in words}\label{sec:shape}
 
@@ -253,13 +251,13 @@ derivatives in this paper are formal partial derivatives of
 polynomials).  We split according to $Dq$.
 
 If $Dq = 0$ --- that is, no monomial of $q$ has both exponents odd ---
-then a pleasant chain-rule identity shows the property ``$Dg = 0$'' is
+then a chain-rule identity shows the property ``$Dg = 0$'' is
 preserved by every substitution into $q$.  The variables and constants
-have it; $xy$ does not ($D(xy) = 1$).  So $xy \notin \Clo(q)$, and we
-are done with this case: a conserved quantity, nothing more.
+have it; $xy$ does not ($D(xy) = 1$).  So $xy \notin \Clo(q)$, and
+this case is done.
 
-If $Dq \neq 0$ we will show $x + y \notin \Clo(q)$, and all the work
-lives here.
+If $Dq \neq 0$ we will show $x + y \notin \Clo(q)$; this case takes
+the rest of the argument.
 
 \medskip
 \noindent\emph{Step 2: from clones to curves.}
@@ -302,8 +300,8 @@ the witness forces a great deal of square structure.  The endgame is a
 fork.  Either some polynomial relation with $\F_2$-coefficients holds
 along the witness --- and any such relation is fatal, because it pins
 the witness to algebraic data, contradicting the genericity of the
-level $c$ --- or no such relation fires, in which case the square
-structure consumes the witness itself: both $\alpha$ and $\beta$ turn
+level $c$ --- or no such relation holds, in which case both $\alpha$
+and $\beta$ turn
 out to be squares of polynomials of half the degree,
 $\alpha = \alpha_1^2$, $\beta = \beta_1^2$, and because the
 coefficients of $q$ lie in $\F_2$ (where squaring fixes everything),
@@ -312,16 +310,16 @@ coefficients of $q$ lie in $\F_2$ (where squaring fixes everything),
 \]
 so $(\alpha_1, \beta_1)$ is again a witness, for the \emph{same} $q$,
 at the level $\sqrt{c}$, with \emph{half the degree}.  Repeat.  The
-degree cannot halve forever, so eventually the fatal branch fires.
+degree cannot halve forever, so eventually the first branch occurs.
 
 The induction, note, is not on $q$ at all: $q$ never changes.  It is
 on the witness, and the decreasing quantity is the number of times the
 witness can still factor through the Frobenius (squaring) map --- what
-one might call its \emph{Frobenius depth}.  We found this inversion
---- inducting on the counterexample's Frobenius depth rather than on
-any complexity measure of $q$ --- to be the key that unlocked the
-problem, after many attempts at induction on degree-like measures of
-$q$ failed.  Degree of $q$ is a poor induction variable here because
+one might call its \emph{Frobenius depth}.  This inversion ---
+inducting on the counterexample's Frobenius depth rather than on
+any complexity measure of $q$ --- is the main idea of the proof; our
+attempts at induction on degree-like measures of
+$q$ had all failed.  Degree of $q$ is a poor induction variable here because
 substitution composes degrees in uncontrollable ways (note e.g.\ that
 $q$ may reproduce low-degree polynomials from high-degree inputs);
 Frobenius depth of the witness is immune to this.
@@ -336,13 +334,14 @@ are additionally verified by an adversarial judge
 (\texttt{leanprover/comparator}) against a standalone statement file
 of roughly ninety lines, with every proof replayed through two
 independent kernels --- so the many edge cases, where an argument this
-dense is most fragile, are precisely what the verification rules out.
+dense is most fragile, are covered by the verification.
 
 \section{Definitions and conventions}\label{sec:prelim}
 
 \begin{definition}\label{def:clone}
-Let $R$ be a commutative ring and $p \in R[x,y]$.  The
-\emph{substitution clone} $\Clo(p) \subseteq R[x,y]$ is the smallest
+Let $R$ be a commutative ring, $R[x,y]$ the ring of formal
+polynomials in two variables, and $p \in R[x,y]$.  The set
+$\Clo(p) \subseteq R[x,y]$ is the smallest
 set of polynomials such that
 \begin{enumerate}
   \item $x \in \Clo(p)$, $y \in \Clo(p)$, and $c \in \Clo(p)$ for
@@ -350,7 +349,7 @@ set of polynomials such that
   \item if $f, g \in \Clo(p)$ then $p(f,g) \in \Clo(p)$,
 \end{enumerate}
 where $p(f,g)$ denotes substitution of $f$ for $x$ and $g$ for $y$ in
-$p$.  We call $p$ \emph{complete} over $R$ if $\Clo(p) = R[x,y]$.
+$p$.  We say $p$ \emph{generates} $R[x,y]$ if $\Clo(p) = R[x,y]$.
 \end{definition}
 
 Thus $\Clo(p)$ is the set of polynomials expressible by a formula in
@@ -363,9 +362,9 @@ $xy \in \Clo(p)$.
 
 \begin{proof}
 One direction is trivial.  For the other, first note that substituting
-members of the clone into a \emph{member} of the clone again lands in
-the clone (induction on the formula).  So if $x+y$ and $xy$ are
-members, the clone is closed under the derived binary operations
+members of $\Clo(p)$ into a \emph{member} of $\Clo(p)$ again lands in
+$\Clo(p)$ (induction on the formula).  So if $x+y$ and $xy$ are
+members, $\Clo(p)$ is closed under the derived binary operations
 $(f,g) \mapsto f + g$ and $(f,g) \mapsto fg$; since it contains the
 variables and constants, it contains every polynomial.
 \end{proof}
@@ -425,7 +424,7 @@ out.
 
 \begin{proof}[Proof of Theorem~\ref{thm:converse}]
 By Lemma~\ref{lem:criterion} it suffices to reach $x+y$ and $xy$.
-Everything flows from one identity:
+All steps below are instances of one identity:
 \begin{equation}\label{eq:master-id}
   q\bigl(\alpha,\, q(\alpha', \gamma)\bigr)
   = \alpha^2 - \alpha'^2 + \gamma .
@@ -479,13 +478,13 @@ $\F_3$, the single operation $x^2 - y$ generates the full polynomial
 ring $\F_3[x,y]$.  Over $\Z$ the translation step requires
 realizing $d = c^2 - e^2$ with $c, e \in \Z$, which is possible only
 for $d \not\equiv 2 \pmod 4$; the increments available are then too
-even to span, and the derivation jams --- as, by Theorem~\ref{thm:Z},
-every derivation must.
+even to span, and the derivation breaks down --- as, by
+Theorem~\ref{thm:Z}, every derivation must.
 \end{remark}
 
 \begin{remark}
-Theorem~\ref{thm:converse} produces a complete operation of degree
-$2$.  We do not know the complete picture for higher degrees; see
+Theorem~\ref{thm:converse} produces a generator of degree
+$2$.  We do not know the full picture for higher degrees; see
 Section~\ref{sec:open}.
 \end{remark}
 
@@ -714,8 +713,7 @@ polynomial equations over $\F_2$ pinning $P$ down; one shows (this is
 easy here, and is Lemmas~\ref{lem:algpoint} and~\ref{lem:keystone} in
 general) that $P$ must have coordinates \emph{algebraic} over $\F_2$.
 But then $c = q(P)$ is algebraic --- contradicting transcendence of
-the level.  Generic level sets pass through no critical points; that
-is what genericity is for.
+the level.  A generic level set passes through no critical point.
 
 Otherwise $A$ and $B$ are coprime in $K[t]$.  A product of two coprime
 polynomials is a square only if each factor is (up to unit, and units
@@ -726,8 +724,8 @@ and \eqref{eq:engine-warm} turns this into
   \alpha' = \beta' = 0 .
 \]
 By perfectness, $\alpha = \alpha_1^2$ and $\beta = \beta_1^2$ for some
-$\alpha_1, \beta_1 \in K[t]$ of \emph{half} the degree.  And now the
-crucial use of $\F_2$-coefficients: squaring fixes $0$ and $1$, so
+$\alpha_1, \beta_1 \in K[t]$ of \emph{half} the degree.  Here the
+$\F_2$-coefficients enter: squaring fixes $0$ and $1$, so
 squaring a polynomial commutes with substituting into $q$,
 \[
   q(\alpha_1, \beta_1)^2
@@ -741,7 +739,7 @@ again a witness, for the same $q$, at half the total degree}.
 
 Iterating, the total degree $\deg\alpha + \deg\beta$ halves at every
 round in the second branch, and cannot do so forever; the first branch
-must eventually fire, giving the contradiction.  This proves
+must eventually occur, giving the contradiction.  This proves
 Theorem~\ref{thm:descent} in the warm-up case.  The induction
 variable, to repeat the point from the introduction, is a property of
 the \emph{witness} --- how many more times it can factor through
@@ -764,8 +762,8 @@ points of $q$ to be algebraic, and this can simply be false: the
 critical equations $\partial_x q = \partial_y q = 0$ may have
 \emph{curves} of solutions.  Indeed if $w := \gcd(A_1, A_2, A_3)$ is
 nonconstant then by \eqref{eq:partials} the whole curve $\{w = 0\}$
-consists of critical points, and a witness might conceivably ride
-along near it.  The remedy is to peel $w$ off before running the
+consists of critical points, and a witness might pass through such
+points.  The remedy is to peel $w$ off before running the
 engine.  Write $A_i = w B_i$, so that the $B_i$ have no common factor,
 and
 \begin{equation}\label{eq:peel}
@@ -776,8 +774,8 @@ and
 with $B_3 \neq 0$.  We will run the warm-up argument \emph{on $h$
 instead of $q$}: the function
 $H := h(\alpha,\beta)$ is no longer constant along the witness, but
---- and this is the small miracle that makes the peel legal --- its
-derivative still vanishes.  From \eqref{eq:peel} and
+its derivative still vanishes, which is what makes the peel legal.
+From \eqref{eq:peel} and
 $q(\alpha,\beta) = c = r^2$:
 \begin{equation}\label{eq:S}
   W^2 H = S^2,
@@ -786,14 +784,13 @@ $q(\alpha,\beta) = c = r^2$:
 \end{equation}
 using $(u+v)^2 = u^2 + v^2$.  If $W \neq 0$, differentiating
 \eqref{eq:S} (both $W^2$ and $S^2$ are squares) gives $W^2 H' = 0$,
-so $H' = 0$: \emph{the moving level of $h$ is Frobenius-flat}.  The
+so $H' = 0$.  The
 engine only ever used the vanishing of the level's derivative, so it
 runs on $h$ unchanged.
 
 What the peel buys is the algebraicity of critical points: for $h$,
 unlike $q$, the critical locus contains no curve.  That is the
-keystone lemma below, and its proof is a pure characteristic-$2$
-pleasantry.  Finally, the various nondegeneracy conditions accumulated
+keystone lemma below.  Finally, the various nondegeneracy conditions accumulated
 along the way ($W \neq 0$, $\Delta \neq 0$, $A \neq 0$, $B \neq 0$)
 are all of the same shape --- some fixed nonzero polynomial with
 $\F_2$-coefficients vanishing identically along the witness --- and a
@@ -1003,29 +1000,31 @@ contradicting Proposition~\ref{prop:perfect}.
 fields.}
 
 \begin{proof}[Proof of Theorem~\ref{thm:dichotomy}]
-If $2$ is a unit of $R$, the operation $x^2 - y$ is complete by
-Theorem~\ref{thm:converse}.  If $2$ is not a unit, it lies in a
-maximal ideal $\mathfrak m$, and a complete operation over $R$ would
+If $2$ is a unit of $R$, the operation $x^2 - y$ generates $R[x,y]$
+by Theorem~\ref{thm:converse}.  If $2$ is not a unit, it lies in a
+maximal ideal $\mathfrak m$, and a generator over $R$ would
 push forward along $R \to R/\mathfrak m$ (Lemma~\ref{lem:transfer}
-again) to a complete operation over the residue field, which has
+again) to a generator over the residue field, which has
 characteristic $2$ --- contradicting Theorem~\ref{thm:char2}.
 \end{proof}
 
-\section{Relation to classical completeness theory}
+\section{Relation to classical functional completeness}
 \label{sec:context}
 
-For operations-as-functions on a finite set, one-element completeness
+For operations-as-functions on a finite set, one-element functional
+completeness
 is classical territory.  Post's classification of the Boolean clones
 locates the Sheffer stroke \cite{Sheffer,Post}; Webb exhibited a
-single complete operation on every finite domain \cite{Webb}; and
-there are effective completeness criteria, from S{\l}upecki through
+single functionally complete operation on every finite domain
+\cite{Webb}; and
+there are effective functional completeness criteria, from S{\l}upecki through
 Rousseau to Rosenberg's classification of the maximal function clones
 \cite{Slupecki,Rousseau,Rosenberg}.
 
 Example~\ref{ex:nand} (Section~\ref{sec:precision}) showed that over
 finite fields the formal statements of this paper and the classical
 functional ones can diverge.  In the positive direction, however,
-formal completeness does project onto a clean classical statement,
+the generation theorem does project onto a classical statement,
 which we record for universal algebraists.
 Recall that an algebra is \emph{functionally complete} if every
 finitary operation on its underlying set is a polynomial operation
@@ -1099,29 +1098,30 @@ with the paper.
 \subsection*{Degrees and characterization}
 
 \begin{question}
-Which degrees admit complete operations over $\Q$?  Degree $2$ does
+Which degrees admit single generators over $\Q$?  Degree $2$ does
 (Theorem~\ref{thm:converse}).  For degree $3$ a natural candidate is
 $x^3 - y$: translations by arbitrary rationals follow from the
 classical fact that every rational number is a sum of three rational
 cubes (with explicit formulas), and a cubic analogue of the linear
-engine appears to reach $xy$; we have not completed the
+engine appears to reach $xy$; we have not finished the
 verification.  The answer is characteristic-sensitive: over $\F_3$
 the map $u \mapsto u^3$ is additive (Frobenius), and one checks that
-the clone of $x^3 - y$ consists only of polynomials of the form
+$\Clo(x^3 - y)$ consists only of polynomials of the form
 \emph{additive plus constant} --- $\F_3$-linear combinations of the
 monomials $x^{3^i}, y^{3^j}$, plus a constant (the constants enter
 because they are generators) --- a class closed under substitution
-into $x^3 - y$ and excluding $xy$; so $x^3 - y$ is certainly not
-complete there.
+into $x^3 - y$ and excluding $xy$; so $x^3 - y$ is certainly not a
+generator there.
 \end{question}
 
 \begin{question}\label{q:characterize}
-Away from characteristic $2$, \emph{which} operations are complete?
-Completeness is not simply ``nonlinear and depending on both
+Away from characteristic $2$, \emph{which} operations are single
+generators?
+Generation is not simply ``nonlinear and depending on both
 variables'': over $\Q$,
 \begin{itemize}
-\item $xy + 1$ is not complete, although it is nonlinear, uses both
-  variables, and its clone contains $xy$.  The obstruction is a
+\item $xy + 1$ is not a generator, although it is nonlinear, uses both
+  variables, and $\Clo(xy+1)$ contains $xy$.  The obstruction is a
   characteristic-zero instance of the rigidity property $(\dagger)$:
   if $\alpha\beta + 1 = F(x{+}y)$ is nonconstant then
   $\alpha\beta = h(x{+}y)$ splits over $\overline{\Q}$ into linear
@@ -1129,7 +1129,7 @@ variables'': over $\Q$,
   in particular $\alpha$ and $\beta$ --- lies in $\Q[x{+}y]$; the
   master reduction (whose proof is characteristic-free) then excludes
   $x+y$.
-\item $x^2 + y$ is not complete, although $x^2 - y$ is: every element
+\item $x^2 + y$ is not a generator, although $x^2 - y$ is: every element
   of $\Clo(x^2+y)$ has the form $a + \sum_i s_i^2$ with
   $a \in \{x, y\} \cup \Q$ (the shape is preserved by
   $(f,g) \mapsto f^2 + g$), and neither $x+y$ nor $xy$ is of this
@@ -1139,7 +1139,7 @@ variables'': over $\Q$,
 \end{itemize}
 Together with the affine obstruction (linear $p$) and the monomial
 obstruction ($\Clo(xy)$ consists of monomials), this suggests asking
-whether completeness is governed by a finite explicit list of
+whether generation is governed by a finite explicit list of
 ``conserved classes'' --- proper subsets of $R[x,y]$ containing the
 generators and closed under substitution into $p$.  We do not know;
 we also cannot presently decide simple boundary cases such as
@@ -1153,7 +1153,7 @@ Question~\ref{q:decidable}.
 \subsection*{Decidability}
 
 \begin{question}\label{q:decidable}
-Is membership in $\Clo(p)$ decidable?  Is completeness?
+Is membership in $\Clo(p)$ decidable?  Is generation?
 \end{question}
 
 Half of the problem is easy: membership is semidecidable, since one
@@ -1179,13 +1179,13 @@ says nothing about the degree of what you must build it from.
 This is why every non-membership argument in this paper avoids search
 entirely and instead exhibits a \emph{cancellation-immune invariant}:
 a property that is checked on the final polynomial alone and is
-preserved by every substitution into $q$, however the intermediate
-terms conspire --- membership in $\ker D$ in
+preserved by every substitution into $q$, whatever the intermediate
+terms are --- membership in $\ker D$ in
 Proposition~\ref{prop:Dzero}, the invariant $P$ in
 Proposition~\ref{prop:master}.  A decision procedure would seem to
 require either a computable bound on derivation size, which
-cancellation conspires against, or a supply of such invariants
-complete enough to certify every non-membership; we possess neither,
+cancellation undermines, or a supply of such invariants
+rich enough to certify every non-membership; we possess neither,
 and we suspect the question is hard.  For comparison: in the cousin
 problem of membership in the \emph{ideal} generated by given
 polynomials, the analogous degree question is settled --- doubly
@@ -1210,7 +1210,7 @@ any one $F$; we have not pursued it.)  More broadly, we have
 attempted no Mal'cev-condition analysis of the algebras
 $\langle R;\, p \rangle$: which congruence conditions
 (permutability, distributivity, \dots) the varieties they generate
-satisfy, and whether these interact with completeness of $p$, are
+satisfy, and whether these interact with $p$ generating $R[x,y]$, are
 natural questions for universal algebraists that our methods do not
 touch.
 \end{question}
@@ -1219,7 +1219,7 @@ touch.
 
 \begin{question}
 The same questions can be posed for the field of rational functions:
-preliminary calculations suggest $1/x - y$ is complete over
+preliminary calculations suggest $1/x - y$ is a single generator of
 $\Q(x,y)$ in a suitable sense.  Substitution of rational functions is
 a partial operation (denominators may vanish identically), so even
 stating this precisely requires a partial-clone formalism.
@@ -1315,10 +1315,12 @@ und ihre Anwendungen 6, Akademie-Verlag, Berlin, 1978.
 
 \section{The formal statement layer}\label{app:lean}
 
-For the record, the complete definitional trust base of the formal
+For the record, the full definitional trust base of the formal
 verification ($R$ an arbitrary commutative ring; \texttt{X 0},
 \texttt{X 1} the two variables of a bivariate polynomial ring;
-\texttt{bind1 ![a,b] p} denotes the substitution $p(a,b)$):
+\texttt{bind1 ![a,b] p} denotes the substitution $p(a,b)$; the formal
+development uses \texttt{complete} in declaration names for the
+generation property):
 
 \begin{verbatim}
 inductive Clo (p : MvPolynomial (Fin 2) R) :
