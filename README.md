@@ -62,9 +62,13 @@ dichotomy does not apply — the disjunction theorem holds at the level of
 *functions*: no polynomial binary operation on `ℕ` reaches both `+` and
 `×` by composition (`polynomial_does_not_reach_both`). The easy halves
 generalize to every zero-sum-free (canonically ordered) commutative
-semiring (`ℕ∞`, `ℚ≥0`, `ℝ≥0`, `ℕ[X]`, …); the hard half is ℕ-specific
-(discreteness). Since `ℕ` is an infinite domain, the function-level
-statement implies the formal one.
+semiring. The full disjunction theorem is also proved for `ℚ≥0` and
+`ℝ≥0` in the research repository (Archimedean growth argument, not yet
+ported here); the smallest unsettled zero-sum-free case is `ℕ∞`. Since
+`ℕ` is an infinite domain, the function-level statement implies the
+formal one — and the formal `ℕ` statement now also follows in three
+lines from the F₂ theorem by parity transfer (`nat_master` in the
+research repository).
 
 `FrobeniusDescent/StatementAudit.lean` derives independently known
 facts from the main theorems (e.g. `x+y ∉ Clo(xy)`, and the historical
