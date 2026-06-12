@@ -54,7 +54,13 @@ finer than its image otherwise; it should not be confused with the
 clone of polynomial operations on $R$ in the sense of universal
 algebra, nor with the full clone of all finitary operations on $R$.
 The distinction between formal polynomials and the functions they
-induce matters over finite fields.  For example,
+induce matters over finite fields, and the contrast is sharpest
+there: by a theorem of Webb \cite{Webb}, a single binary operation
+generates every operation on any finite set --- in particular every
+polynomial function over $\F_2$ is a composition of a single binary
+polynomial function --- while Theorem~\ref{thm:F2} shows that no
+single polynomial generates $\F_2[x,y]$ formally.  The formal
+statement therefore has no functional counterpart.  Concretely,
 $n := 1 + xy \in \F_2[x,y]$ induces the binary NAND operation on
 $\F_2$ (the Sheffer stroke \cite{Sheffer}), and every Boolean
 function is a composition of NAND; nevertheless
@@ -127,6 +133,21 @@ exponents even is a square.
 Univariate degrees follow the convention that constants ---
 including $0$ --- have degree $0$, so $\deg(f^2) = 2\deg f$ without
 exception.
+
+\medskip
+
+\noindent\emph{Related work.}  Webb's theorem \cite{Webb} settles
+the function-setting analogue on every finite set in the positive
+direction, in contrast with Theorem~\ref{thm:F2}.  The nearest prior
+work on formal polynomials we know of is that of Aichinger and
+Kreinecker on generation in $(\Z[x], +, \circ)$
+\cite{Aichinger2013,AichingerKreinecker}: univariate, over $\Z$,
+with addition retained as a primitive, and including
+$2$-divisibility obstructions such as
+$2x^{10} \in \langle x^2 \rangle$ but
+$x^{10} \notin \langle x^2 \rangle$.  We are not aware of prior work
+on the composition-only single-generator question for formal
+polynomial rings.
 
 \section{The positive half: $x^2 - y$}\label{sec:converse}
 
@@ -485,12 +506,28 @@ admits unbounded cancellation, so bounded search proves nothing.
 
 \begin{thebibliography}{9}
 
+\bibitem{Aichinger2013} E.~Aichinger, \emph{Generating polynomials
+using function composition}, Quaest.\ Math.\ 36 (2013), no.~1,
+39--46.
+
+% UNVERIFIED: the published version appears as S. Kreinecker,
+% Quaest. Math. 44 (2021), no. 5, 693--715, with an author list
+% differing from the arXiv version; checked only against search
+% snippets, so we cite the (confirmed) arXiv version.
+\bibitem{AichingerKreinecker} E.~Aichinger and S.~Kreinecker,
+\emph{Subnearrings of $(\Z[x], +, \circ)$}, preprint,
+arXiv:1709.01345 (2017).
+
 \bibitem{Lang} S.~Lang, \emph{Algebra}, rev.\ 3rd ed., Graduate Texts
 in Mathematics 211, Springer, New York, 2002.
 
 \bibitem{Sheffer} H.~M.~Sheffer, \emph{A set of five independent
 postulates for Boolean algebras, with application to logical
 constants}, Trans.\ Amer.\ Math.\ Soc.\ 14 (1913), 481--488.
+
+\bibitem{Webb} D.~L.~Webb, \emph{Generation of any $n$-valued logic
+by one binary operation}, Proc.\ Nat.\ Acad.\ Sci.\ USA 21 (1935),
+252--254.
 
 \end{thebibliography}
 
